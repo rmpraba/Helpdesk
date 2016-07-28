@@ -37,6 +37,19 @@
       .backicon{
         width:36%;
       }
+      .reg{
+        float: left !important;
+      }
+      .activate{
+        float: right !important;
+        right: 0;
+      }
+      .signup{
+        width:100%;
+      }
+      .forgotpass{
+        width: 100% !important;
+      }
     </style>
     <body>
         <div class="row">
@@ -50,6 +63,9 @@
             </div>
             <div class="field" id="mob">
               <paper-input label="Mobile Number" value="{{mobile}}" id="mobile" allowed-pattern="[0-9]" on-change="mobileno" required error-message="Mobile Number"></paper-input>
+            </div>
+            <div class="field">
+              <paper-input label="Password" type="password" value="{{pass}}" id="iop" on-change="loginpassword" required error-message="Password"></paper-input>
             </div>
             <div class="field">
               <paper-dropdown-menu label="Student" id="drop">
@@ -73,17 +89,17 @@
               <ahref id="admin" class="admin" on-click="butclick"><u>{{butname}}</u></ahref>
             </div> -->
             <div id="id">
-            <div class="or"><strong>OR</strong></div>
-          <div class="field">
-            If don't have an account
-              <ahref class="admin" on-click="link"><u>Register Here...!</u></ahref>
-          </div>
-          <div class="field">
-            
-              <ahref class="admin" on-click="link2"><u>Activate Here...!</u></ahref>
-               Or 
-               <ahref class="admin" on-click="link3"><u>Forgot password..!</u></ahref>
-          </div>
+            <div class="signup">
+              <div class="buttons reg">
+                  <paper-button class="admin" on-click="link">Register</paper-button>
+              </div>
+              <div class="buttons activate">
+                  <paper-button class="admin" on-click="link2">Activate</paper-button>
+              </div>
+            </div>
+            <div class="buttons">
+                  <paper-button class="admin forgotpass" on-click="link3">Forgot Password</paper-button>
+              </div>
           </div>
           </div>
           <div>
