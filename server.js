@@ -1120,7 +1120,7 @@ app.post('/checktransportreq',  urlencodedParser,function (req, res)
 {
   var school_id={"school_id":req.query.schol};
   var stud={"id":req.query.studid};
-  console.log(school_id+''+stud);
+  //console.log(school_id+''+stud);
        connection.query('select transport_required from student_details where ? and ?',[school_id,stud],
         function(err, rows)
         {

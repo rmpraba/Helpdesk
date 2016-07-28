@@ -194,7 +194,7 @@
           document.querySelector('app-card').setPage('transport');
           document.querySelector('transport-app').setPage("complaintpage");
         }
-        else if ((role=="Academics"||role=="Administration"||role=="Transport"||role=="Facilities")&&(icon=="staff")) {
+        else if ((role=="Academics"||role=="Administration"||role=="Transport"||role=="Facilities"||role=="Finance"||role=="Relation")&&(icon=="staff")) {
           document.querySelector('icon-card').Fnadmin();
           this.$.qpostid.getmsg(); 
           document.querySelector('app-card').setPage("transport");
@@ -323,7 +323,7 @@ var res=e.detail.response.returnval;
           this.$.qpostid.parentinbox();
           document.querySelector('app-card').setPage("transport");
           document.querySelector('transport-app').setPage("complaintpage");
-        } else if ((id=="admin"||role=="Academics"||role=="Administration"||role=="Transport"||role=="Facilities")&&(icon=="staff")) {
+        } else if ((id=="admin"||role=="Academics"||role=="Administration"||role=="Transport"||role=="Facilities"||role=="Finance"||role=="Relation")&&(icon=="staff")) {
           document.querySelector('icon-card').Fnadmin();
           this.$.qpostid.getmsg(); 
           document.querySelector('app-card').setPage("transport");
