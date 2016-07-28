@@ -100,7 +100,7 @@
               <paper-input class="field" id="passnew" type="password"  on-change="newpass" label="Password" value="{{newpassword}}" required auto-validate error-message="Need a Password!" ></paper-input>
             </div>
             <div class="field">
-              <paper-input class="field" id="passconfirm" type="password" on-change="confirmpass" label="Confirm Password" required auto-validate error-message="Need a Password!"></paper-input>
+              <paper-input class="field" id="passconfirm" type="password" on-change="confirmpass" value="{{confirmpassword}}" label="Confirm Password" required auto-validate error-message="Need a Password!"></paper-input>
             </div>
             <p style="color:red;" id="passemptyerrormsg">Password and Confirm Password Should not be empty.</p>
             <p style="color:red;" id="passerrormsg">Password and Confirm Password Should be same.</p>
