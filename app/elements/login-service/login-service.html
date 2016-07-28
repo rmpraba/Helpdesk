@@ -115,6 +115,28 @@
         debounce-duration="300"
         >
   </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="recoverpassajax"
+        url="{{recoverpassurl}}"
+        params="{{recoverpassparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="recoverpassResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
+   <iron-ajax
+        method="post"
+        id="recoversendmailajax"
+        url="{{recoversendmailurl}}"
+        params="{{recoversendmailparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="recoversendmailResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
    
    <query-post id="qpostid"></query-post>
   </template>
@@ -126,6 +148,11 @@
     var fwd;
     var rep;
     var reply;
+    var mail;
+    var mobileno;
+    var personname;
+    var verifykey;
+    var relation;
     Polymer({
       is: 'login-service',
        HaddressResponse:function(e)
@@ -429,6 +456,36 @@ var res=e.detail.response.returnval;
       else{
         document.querySelector('login-form').getinvaliddialog();
       }
+    },
+    recoverpass:function(mob){
+      mail=mob[0].email;
+      relation=mob[0].relationship;
+      verifykey=Math.floor(100000 + Math.random() * 900000);
+      mobileno=mob[0].new_mobile;
+      personname=mob[0].user_name;
+
+        this.recoverpassurl=sessionStorage.getItem("haddrinfo")+"/recoverpass";
+      var obj={"reg":"","key":""}
+      obj.reg=mob[0].new_mobile;
+      obj.key=verifykey;
+      this.recoverpassparam=obj;
+      this.$.recoverpassajax.generateRequest();
+
+    },
+    recoverpassResponse:function(e){
+      var res=e.detail.response.returnval;
+      if(res='success'){
+      this.recoversendmailurl=sessionStorage.getItem("haddrinfo")+"/regemailsend";
+      var obj={"regmail":"","regverify":"","regrel":"","regmobnew":"","reguser":""}
+      obj.regmail=mail;
+      obj.regverify=verifykey;
+      obj.regrel=relation;
+      obj.regmobnew=mobileno;
+      obj.reguser=personname;
+      this.recoversendmailparam=obj;
+      this.$.recoversendmailajax.generateRequest();
+      }
+    }
     });
   })();
   </script>

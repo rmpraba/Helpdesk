@@ -325,17 +325,25 @@
       },
       subforgot:function(){
         this.$.login.forgorpass(this.regmob);
+        document.querySelector('#forgot').close();  
       },
       getresponsedialog:function(res){
           document.querySelector('#successdialog').open();  
           this.successreply="Your OTP is sent to your registered mail ID \nPlease check it...";
-          alert(res);
+          //alert(JSON.stringify(res));
+          this.$.login.recoverpass(res);
         },
         getinvaliddialog:function(){
         
           document.querySelector('#invaliddialog').open();  
           this.invalidreply="Your number is not registered \nPlese enter the registered mobile number \nOr Register Again..!!!";
         
+      },
+      successexit:function(){
+              document.querySelector('#successdialog').close();  
+      },
+      invalidexit:function(){
+            document.querySelector('#invaliddialog').close();  
       }
     });
   })();

@@ -22,6 +22,8 @@ app.post('/regemailsend', urlencodedParser,function (req, res) {
   var mobilenumber=req.query.regmobnew;
   var relation=req.query.regrel;
   var verificationcode=req.query.regverify;
+  var emailreg=req.query.regmail;
+  console.log(username+'   '+mobilenumber+'   '+relation+'   '+verificationcode+'   '+emailreg);
 
 var server  = email.server.connect({
    user:    "mlzssamsidh@yahoo.com",
@@ -32,9 +34,9 @@ var server  = email.server.connect({
 });
 // send the message and get a callback with an error or details of the message that was sent
 server.send({
-   text:    "FEE RECEIPT/ACKNOWLEDGEMENT",
+   text:    "Regarding OTP for Helpdesk MLTS",
    from:    "mlzssamsidh@yahoo.com",
-   to:      "ntamilselvimca@gmail.com",
+   to:      "kartiksubu.krs@gmail.com",
    subject: "FEE RECEIPT/ACKNOWLEDGEMENT",
     attachment:
 
@@ -753,7 +755,7 @@ app.post('/verifymob',  urlencodedParser,function (req, res)
 
 app.post('/regmob',  urlencodedParser,function (req, res)
 {
-  var dv={"registered_no":req.query.regmob,"user_name":req.query.username,"relationship":req.query.relation,"new_mobile":req.query.newmob,"email":req.query.email,"verify_key":req.query.verifykey,"activate_flag":req.query.activate};
+  var dv={"registered_no":req.query.regmob,"user_name":req.query.username,"relationship":req.query.relation,"new_mobile":req.query.newmob,"email":req.query.email,"verify_key":req.query.verifykey,"activate_flag":req.query.activate,"password":""};
        connection.query('insert into alternate_no set ?',[dv],
         function(err, rows)
         {
@@ -1067,7 +1069,7 @@ app.post('/forgorpass',  urlencodedParser,function (req, res)
 {
     
     var mobno={"new_mobile":req.query.oldmob};
-    connection.query('select email from alternate_no WHERE ?',[mobno],
+    connection.query('select * from alternate_no WHERE ?',[mobno],
   function(err, rows)
   {
     if(!err)
@@ -1083,6 +1085,30 @@ app.post('/forgorpass',  urlencodedParser,function (req, res)
     }
     else
     {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+});
+  });
+
+
+
+app.post('/recoverpass',  urlencodedParser,function (req, res)
+{
+    
+    var mobno={"new_mobile":req.query.reg};
+    var ke={"verify_key":req.query.key,"activate_flag":0};
+    connection.query('update alternate_no set ? where ?',[ke,mobno],
+  function(err, rows)
+  {
+    if(!err)
+    {
+   
+        res.status(200).json({'returnval': 'success' });
+    }
+    else
+    {
+      console.log(err);
       res.status(200).json({'returnval': 'invalid'});
     }
 });

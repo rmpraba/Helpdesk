@@ -361,6 +361,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var regusername;
     var regvericode;
     var regrelation;
+    var regmail;
     var fwd;
     var rep;
     var queryy_id;
@@ -1011,6 +1012,7 @@ regmob:function(regmob,username,relation,newmob,email){
   regnewno=newmob;
   regusername=username;
   regrelation=relation;
+  regmail=email;
 
 this.regmoburl=sessionStorage.getItem("haddrinfo")+"/regmob";
 var obj={"regmob":"","username":"","relation":"","newmob":"","email":"","verifykey":"","activate":""}
@@ -1032,11 +1034,12 @@ regmobResponse:function(e){
     //alert('The new registration is done successfully');
     document.querySelector('registration-form').Fnclear();
     this.regmailurl=sessionStorage.getItem("haddrinfo")+"/regemailsend";
-    var obj={"regmobnew":"","reguser":"","regverify":"","regrel":""}
+    var obj={"regmobnew":"","reguser":"","regverify":"","regrel":"","regemail":""}
     obj.regmobnew=regnewno;
     obj.reguser=regusername;
     obj.regverify=regvericode;
     obj.regrel=regrelation;
+    obj.regemail=regmail;
     this.regmailparam=obj;
     //alert(this.regmailparam);
     this.$.regmailajax.generateRequest();
