@@ -167,6 +167,7 @@
         </paper-dialog>
     </body>
     <login-service id="login"></login-service>
+     <query-post id="qpostid"></query-post>
      <!-- <paper-button on-click="FnClick">Click</paper-button> 
       <iron-ajax        
         id="notifyajax"
@@ -280,6 +281,7 @@
     {
       var id=e.target.selectedItem.value;
       //alert(e.target.selectedItem.value);
+      this.$.qpostid.checktransportreq(id);
       sessionStorage.setItem("studid",id);
       this.$.login.getdetails(id);
     },

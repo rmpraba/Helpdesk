@@ -1116,6 +1116,34 @@ app.post('/recoverpass',  urlencodedParser,function (req, res)
   });
 
 
+app.post('/checktransportreq',  urlencodedParser,function (req, res)
+{
+  var school_id={"school_id":req.query.schol};
+  var stud={"id":req.query.studid};
+  console.log(school_id+''+stud);
+       connection.query('select transport_required from student_details where ? and ?',[school_id,stud],
+        function(err, rows)
+        {
+    if(!err)
+    {
+    if(rows.length>0){
+        res.status(200).json({'returnval': rows});
+        //console.log(rows);
+        } else {
+        console.log(err);
+        res.status(200).json({'returnval': 'invalid'});
+      }
+    }
+    else
+    {
+        console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+  
+});
+  });
+
+
 /*var Pusher = require('pusher');
 
 var pusher = new Pusher({

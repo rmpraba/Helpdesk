@@ -73,7 +73,7 @@ label.star:before {
           <paper-input hidden value="{{values}}"></paper-input>
           <paper-input hidden value="{{statfeed}}"></paper-input>
           <div class="field">
-            <paper-input label="Student ID" value="{{student_id}}" id="student_id" allowed-pattern="[a-zA-Z0-9 ]" required error-message="need a id!"></paper-input>
+            <paper-input label="Student ID" on-change="checkid" value="{{student_id}}" id="student_id" allowed-pattern="[a-zA-Z0-9 ]" required error-message="need a id!"></paper-input>
           </div>
           <div class="field">
             <paper-input label="Student Name" value="{{student_name}}" id="student_name" allowed-pattern="[a-zA-Z0-9 ]" required error-message="need a name!"></paper-input>
@@ -99,7 +99,7 @@ label.star:before {
                 <paper-listbox class="dropdown-content">
                   <paper-item value="academics"><paper-icon-button  class="category_icon" src="../../images/book_icon.png"></paper-icon-button>Academics</paper-item>
                   <paper-item value="adminstration"><paper-icon-button  class="category_icon" src="../../images/administration_icon.png"></paper-icon-button>Administration</paper-item>
-                  <paper-item value="transport"><paper-icon-button  class="category_icon" src="../../images/schoolbus_icon.png"></paper-icon-button>Transport</paper-item>
+                  <paper-item id="transport" value="transport"><paper-icon-button  class="category_icon" src="../../images/schoolbus_icon.png"></paper-icon-button>Transport</paper-item>
                   <paper-item value="facilities"><paper-icon-button  class="category_icon" src="../../images/facilities_icon.png"></paper-icon-button>Facilities</paper-item>
                 </paper-listbox>
               </paper-menu>
@@ -224,6 +224,9 @@ label.star:before {
       var id = 'dialograte1';
         var dialog = document.getElementById(id);
         dialog.close();
+    },
+    Fnyes:function(){
+      this.$.transport.hidden=true;
     }
     });
   })();

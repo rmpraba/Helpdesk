@@ -335,6 +335,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     on-response="feedcheckResponse"
     debounce-duration="300"
   ></iron-ajax>
+  <iron-ajax
+    method="post"
+    id="checktransportreqajax"
+    url="{{checktransportrequrl}}"
+    params="{{checktransportreqparam}}"
+    handle-as="json"
+    content-type="application/json"
+    on-response="checktransportreqResponse"
+    debounce-duration="300"
+  ></iron-ajax>
     <style>
       :host {
         display: block;
@@ -1159,6 +1169,22 @@ catereportResponse:function(e){
 var res=e.detail.response.returnval;
 //alert(JSON.stringify(res));
 document.querySelector('category-report-card').msgarr=res;
+},
+checktransportreq:function(id){
+    this.checktransportrequrl=sessionStorage.getItem("haddrinfo")+"/checktransportreq";
+    var obj={"schol":"","studid":""}
+    obj.schol=sessionStorage.getItem("schoolx");
+    obj.studid=id;
+    this.checktransportreqparam=obj;
+    alert(JSON.stringify(obj));
+    this.$.checktransportreqajax.generateRequest();
+},
+checktransportreqResponse:function(e){
+    var res=e.detail.response.returnval;
+    if(res[0].transport_required!='yes'){
+      document.querySelector('complaint-form').Fnyes();
+    }
+
 }
   });
   })();
