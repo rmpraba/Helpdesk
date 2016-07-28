@@ -50,6 +50,10 @@
       .forgotpass{
         width: 100% !important;
       }
+      #successdialog paper-button, .dialoghere paper-button{
+        text-align: center;
+        margin: 0 auto;
+      }
     </style>
     <body>
         <div class="row">
@@ -90,16 +94,16 @@
             </div> -->
             <div id="id">
             <div class="signup">
-              <div class="buttons reg">
-                  <paper-button class="admin" on-click="link">Register</paper-button>
+              <div class="buttons reg" style="color:#4e688c;">
+                  <ahref class="admin" on-click="link">Register</ahref>
               </div>
-              <div class="buttons activate">
-                  <paper-button class="admin" on-click="link2">Activate</paper-button>
+              <div class="buttons activate" style="color:#4e688c;">
+                  <ahref class="admin" on-click="link2">Activate</ahref>
+              </div>
+              <div class="buttons" style="text-align:center; color:#4e688c;">
+                  <ahref class="admin forgotpass" on-click="link3">Forgot Password?</ahref>
               </div>
             </div>
-            <div class="buttons">
-                  <paper-button class="admin forgotpass" on-click="link3">Forgot Password</paper-button>
-              </div>
           </div>
           </div>
           <div>
@@ -153,7 +157,6 @@
         </paper-dialog>
          <paper-dialog id="successdialog">
           <h2>{{successreply}}</h2>
-          
           <div class="buttons">
             <paper-button on-click="successexit">Ok</paper-button>
           </div>
