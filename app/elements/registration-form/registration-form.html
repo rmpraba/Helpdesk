@@ -48,6 +48,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               </paper-dropdown-menu>
             </div>
             <div class="field">
+              <paper-checkbox id="samenumber" on-click="same">Check if the Registered mobile and new mobile number are same</paper-checkbox>
               <paper-input label="New Mobile Number" id="newmobileno" value="{{newmobile}}" allowed-pattern="[0-9]" required error-message="Mobile Number"></paper-input>
             </div>
             <div class="field" id="mob">
@@ -99,7 +100,13 @@ var relation;
         relation=e.target.selectedItem.textContent.trim();
        // alert(relation);
       },
-      
+      same:function(){
+        if(document.getElementById('samenumber').checked){
+          this.newmobile = this.regmobile;
+        } else {
+          this.newmobile = '';
+        }
+      },
       back:function(){
         document.querySelector('app-card').setPage('login');
       },
