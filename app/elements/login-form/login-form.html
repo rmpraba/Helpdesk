@@ -91,16 +91,16 @@
           <h2>Activate Here</h2>
           <paper-dialog-scrollable>
             <div class="field">
-              <paper-input class="field" label="Newly Registered Mobile No" value="{{newregmob}}" required auto-validate error-message="Need a Mobile Number!"></paper-input>
+              <paper-input class="field" id="regno" label="Newly Registered Mobile No" value="{{newregmob}}" required auto-validate error-message="Need a Mobile Number!"></paper-input>
             </div>
             <div class="field">  
-              <paper-input class="field" label="Verification Key" value="{{verify}}" required auto-validate error-message="Need a Verification Key"></paper-input>
+              <paper-input class="field" id="verifyno" label="Verification Key" value="{{verify}}" required auto-validate error-message="Need a Verification Key"></paper-input>
             </div>
             <div class="field">
-              <paper-input class="field" type="password"  on-change="newpass" label="Password" value="{{newpassword}}" required auto-validate error-message="Need a Password!" ></paper-input>
+              <paper-input class="field" id="passnew" type="password"  on-change="newpass" label="Password" value="{{newpassword}}" required auto-validate error-message="Need a Password!" ></paper-input>
             </div>
             <div class="field">
-              <paper-input class="field" type="password" on-change="confirmpass" label="Confirm Password" required auto-validate error-message="Need a Password!"></paper-input>
+              <paper-input class="field" id="passconfirm" type="password" on-change="confirmpass" label="Confirm Password" required auto-validate error-message="Need a Password!"></paper-input>
             </div>
             <p style="color:red;" id="passemptyerrormsg">Password and Confirm Password Should not be empty.</p>
             <p style="color:red;" id="passerrormsg">Password and Confirm Password Should be same.</p>
@@ -324,10 +324,10 @@
     },
     activate:function(){
       if(this.newregmob == '' || this.verify =='' || this.newpassword == '' || this.confirmpassword == ''){
-        this.$.newpassword.validate();
-        this.$.confirmpassword.validate();
-        this.$.newregmob.validate();
-        this.$.verify.validate();
+        this.$.passnew.validate();
+        this.$.passconfirm.validate();
+        this.$.regno.validate();
+        this.$.verifyno.validate();
       } else {
         if(this.newpassword === this.confirmpassword){
           this.$.login.activate(this.newregmob,this.verify,this.confirmpassword);
