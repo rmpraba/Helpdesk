@@ -415,12 +415,13 @@ var res=e.detail.response.returnval;
         document.querySelector('complaint-form').student_name=stud_name;
         document.querySelector('complaint-form').classes=classs;
     },
-    activate:function(regno,veri){
+    activate:function(regno,veri, pass){
       this.activateurl=sessionStorage.getItem("haddrinfo")+"/activate";
-      var obj={"reg":"","key":"","acti":""}
+      var obj={"reg":"","key":"","acti":"", "pass":""}
       obj.reg=regno;
       obj.key=veri;
       obj.acti=1;
+      obj.pass = pass;
       this.activateparam=obj;
       this.$.activateajax.generateRequest();
     },

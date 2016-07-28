@@ -90,16 +90,27 @@
           <paper-dialog id="registered">
           <h2>Activate Here</h2>
           <paper-dialog-scrollable>
-              <paper-input class="field" label="Newly Registered Mobile No" value="{{newregmob}}"></paper-input>
-              <paper-input class="field" label="Verification Key" value="{{verify}}"></paper-input>
+            <div class="field">
+              <paper-input class="field" label="Newly Registered Mobile No" value="{{newregmob}}" required auto-validate error-message="Need a Mobile Number!"></paper-input>
+            </div>
+            <div class="field">  
+              <paper-input class="field" label="Verification Key" value="{{verify}}" required auto-validate error-message="Need a Verification Key"></paper-input>
+            </div>
+            <div class="field">
+              <paper-input class="field" type="password"  on-change="newpass" label="Password" value="{{newpassword}}" required auto-validate error-message="Need a Password!" ></paper-input>
+            </div>
+            <div class="field">
+              <paper-input class="field" type="password" on-change="confirmpass" label="Confirm Password" required auto-validate error-message="Need a Password!"></paper-input>
+            </div>
+            <p style="color:red;" id="passemptyerrormsg">Password and Confirm Password Should not be empty.</p>
+            <p style="color:red;" id="passerrormsg">Password and Confirm Password Should be same.</p>
           </paper-dialog-scrollable>
-          <div class="buttons">
+          <div class="buttons" style="width:20% !important; text-align:center; margin: 0 auto;">
             <paper-button on-click="activate" >Activate</paper-button>
           </div>
         </paper-dialog></div>
         <paper-dialog id="dialoghere">
           <h2>{{replyhere}}</h2>
-          
           <div class="buttons">
             <paper-button on-click="exit">Ok</paper-button>
           </div>
@@ -138,7 +149,6 @@
             <paper-button on-click="invalidexit">Ok</paper-button>
           </div>
         </paper-dialog>
-
     </body>
     <login-service id="login"></login-service>
      <!-- <paper-button on-click="FnClick">Click</paper-button> 
@@ -236,13 +246,26 @@
     {
       this.$.login.mobile(this.mobile);
     },
+    newpass:function(){
+      if(this.newpassword === ''){
+        document.querySelector('#passemptyerrormsg').hidden = true;
+      }
+    },
+    confirmpass:function(){
+      if(this.newpassword === this.confirmpassword){
+
+      } else {
+        this.newpassword = '';
+        this.confirmpassword = '';
+        document.querySelector('#passerrormsg').hidden = false;
+      }
+    },
     student:function(e)
     {
       var id=e.target.selectedItem.value;
       //alert(e.target.selectedItem.value);
       sessionStorage.setItem("studid",id);
       this.$.login.getdetails(id);
-      
     },
     getrole:function(role){
       var role = role;
@@ -292,13 +315,24 @@
     },
     link2:function(){
       document.querySelector('#registered').open();
+      document.querySelector('#passerrormsg').hidden = true;
+      document.querySelector('#passemptyerrormsg').hidden = true;
     },
     link3:function(){
         
         document.querySelector('#forgot').open();
     },
     activate:function(){
-      this.$.login.activate(this.newregmob,this.verify);
+      if(this.newregmob == '' || this.verify =='' || this.newpassword == '' || this.confirmpassword == ''){
+        this.$.newpassword.validate();
+        this.$.confirmpassword.validate();
+        this.$.newregmob.validate();
+        this.$.verify.validate();
+      } else {
+        if(this.newpassword === this.confirmpassword){
+          this.$.login.activate(this.newregmob,this.verify,this.confirmpassword);
+        }
+      }
     },
     fnacti:function(){
       document.querySelector('#registered').close();  

@@ -778,8 +778,9 @@ app.post('/activate',  urlencodedParser,function (req, res)
 {
     var mob={"new_mobile":req.query.reg};
     var key={"verify_key":req.query.key};
+    var pass={"password":req.query.pass};
     var flag={"activate_flag":req.query.acti};
-       connection.query('update alternate_no set ? WHERE ? and ?',[flag,key,mob],
+       connection.query('update alternate_no set ? WHERE ? and ? and ?',[flag,key,mob,pass],
         function(err, rows)
         {
     if(!err)
