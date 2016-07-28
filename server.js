@@ -1062,6 +1062,33 @@ app.post('/catereport',  urlencodedParser,function (req, res)
   });
 
 
+
+app.post('/forgorpass',  urlencodedParser,function (req, res)
+{
+    
+    var mobno={"new_mobile":req.query.oldmob};
+    connection.query('select email from alternate_no WHERE ?',[mobno],
+  function(err, rows)
+  {
+    if(!err)
+    {
+    if(rows.length>0){
+        res.status(200).json({'returnval': rows});
+        //console.log(rows);
+        } else {
+        console.log(err);
+        res.status(200).json({'returnval': 0 });
+        //console.log('empty');
+      }
+    }
+    else
+    {
+      res.status(200).json({'returnval': 'invalid'});
+    }
+});
+  });
+
+
 /*var Pusher = require('pusher');
 
 var pusher = new Pusher({

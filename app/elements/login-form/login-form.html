@@ -80,7 +80,9 @@
           </div>
           <div class="field">
             
-              <ahref class="admin" on-click="link2"><u>Activate the Account Here...!</u></ahref>
+              <ahref class="admin" on-click="link2"><u>Activate Here...!</u></ahref>
+               Or 
+               <ahref class="admin" on-click="link3"><u>Forgot password..!</u></ahref>
           </div>
           </div>
           </div>
@@ -104,6 +106,39 @@
         </paper-dialog>
         </div>
         <paper-toast id="toast" text="Account is Activated! Please login.."></paper-toast>
+
+        <paper-dialog id="forgot">
+          <h2>Get new Password</h2>
+          <paper-dialog-scrollable>
+              <paper-input class="field" label="Enter Registered Mobile No" value="{{regmob}}"></paper-input>
+              
+          </paper-dialog-scrollable>
+          <div class="buttons">
+            <paper-button on-click="subforgot" >Submit</paper-button>
+          </div>
+        </paper-dialog></div>
+        <paper-dialog id="dialoghere">
+          <h2>{{replyhere}}</h2>
+          
+          <div class="buttons">
+            <paper-button on-click="exit">Ok</paper-button>
+          </div>
+        </paper-dialog>
+         <paper-dialog id="successdialog">
+          <h2>{{successreply}}</h2>
+          
+          <div class="buttons">
+            <paper-button on-click="successexit">Ok</paper-button>
+          </div>
+        </paper-dialog>
+         <paper-dialog id="invaliddialog">
+          <h2>{{invalidreply}}</h2>
+          
+          <div class="buttons">
+            <paper-button on-click="invalidexit">Ok</paper-button>
+          </div>
+        </paper-dialog>
+
     </body>
     <login-service id="login"></login-service>
      <!-- <paper-button on-click="FnClick">Click</paper-button> 
@@ -258,6 +293,10 @@
     link2:function(){
       document.querySelector('#registered').open();
     },
+    link3:function(){
+        
+        document.querySelector('#forgot').open();
+    },
     activate:function(){
       this.$.login.activate(this.newregmob,this.verify);
     },
@@ -283,6 +322,20 @@
         var id = 'dialoghere';
         var dialog = document.getElementById(id);
         dialog.close();
+      },
+      subforgot:function(){
+        this.$.login.forgorpass(this.regmob);
+      },
+      getresponsedialog:function(res){
+          document.querySelector('#successdialog').open();  
+          this.successreply="Your OTP is sent to your registered mail ID \nPlease check it...";
+          alert(res);
+        },
+        getinvaliddialog:function(){
+        
+          document.querySelector('#invaliddialog').open();  
+          this.invalidreply="Your number is not registered \nPlese enter the registered mobile number \nOr Register Again..!!!";
+        
       }
     });
   })();

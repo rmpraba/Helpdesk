@@ -104,6 +104,17 @@
         debounce-duration="300"
         >
   </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="forgorpassajax"
+        url="{{forgorpassurl}}"
+        params="{{forgorpassparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="forgorpassResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
    
    <query-post id="qpostid"></query-post>
   </template>
@@ -402,7 +413,22 @@ var res=e.detail.response.returnval;
     loginroleResponse:function(e){
       var result = e.detail.response.returnval[0].role;
       document.querySelector('login-form').getrole(result);
-    }
+    },
+    forgorpass:function(regmob){
+      this.forgorpassurl=sessionStorage.getItem("haddrinfo")+"/forgorpass";
+      var obj={"oldmob":""};
+      obj.oldmob=regmob;
+      this.forgorpassparam=obj;
+      this.$.forgorpassajax.generateRequest();
+    },
+    forgorpassResponse:function(e){
+        var res=e.detail.response.returnval;
+        if(res!=0){
+        document.querySelector('login-form').getresponsedialog(res);    
+      }
+      else{
+        document.querySelector('login-form').getinvaliddialog();
+      }
     });
   })();
   </script>
