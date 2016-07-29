@@ -215,14 +215,16 @@
       },
 
 
-    mobile:function(mobile){
+    mobile:function(mobile,pass){
       sessionStorage.setItem("mob",mobile);
       mob=mobile;
-      this.mobileurl=sessionStorage.getItem("haddrinfo")+"/mobile";
-      var obj={"mobile":""};
-      obj.mobile=mobile;
-      this.mobileparam=obj;
-      this.$.mobileajax.generateRequest();
+      this.loginalterurl=sessionStorage.getItem("haddrinfo")+"/loginalter";
+      var obj={"mobile":"","pass":""}
+      obj.mobile=mob;
+      obj.pass=pass;
+      this.loginalterparam=obj;
+      //alert(JSON.stringify(obj));
+      this.$.loginalterajax.generateRequest();
     },
     mobileResponse:function(e)
     {
@@ -241,12 +243,7 @@ var res=e.detail.response.returnval;
               }
               else
               {
-                  this.loginalterurl=sessionStorage.getItem("haddrinfo")+"/loginalter";
-                  var obj={"mobile":""}
-                  obj.mobile=mob;
-                  this.loginalterparam=obj;
-                  //alert(JSON.stringify(obj));
-                  this.$.loginalterajax.generateRequest();
+                  
               }
 
     },
@@ -265,7 +262,7 @@ var res=e.detail.response.returnval;
       }
     else
     {
-      reply='Invalid Mobile number';
+      reply='Invalid Mobile number Or Password';
       document.querySelector('login-form').zxcvdialog(reply);
       document.querySelector('login-form').Fnclear();
     } 
@@ -423,6 +420,7 @@ var res=e.detail.response.returnval;
       obj.acti=1;
       obj.pass = pass;
       this.activateparam=obj;
+      alert(JSON.stringify(obj));
       this.$.activateajax.generateRequest();
     },
     activateResponse:function(e){

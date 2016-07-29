@@ -66,10 +66,10 @@
               <paper-icon-button class="iconbutton" src="../../images/login-icon.png"></paper-icon-button>
             </div>
             <div class="field" id="mob">
-              <paper-input label="Mobile Number" value="{{mobile}}" id="mobile" allowed-pattern="[0-9]" on-change="mobileno" required error-message="Mobile Number"></paper-input>
+              <paper-input label="Mobile Number" value="{{mobile}}" id="mobile" allowed-pattern="[0-9]" required error-message="Mobile Number"></paper-input>
             </div>
-            <div class="field">
-              <paper-input label="Password" type="password" value="{{pass}}" id="iop" on-change="loginpassword" required error-message="Password"></paper-input>
+            <div class="field" id="mobilepass" >
+              <paper-input label="Password" type="password" value="{{pass}}" on-change="mobileno" required error-message="Password"></paper-input>
             </div>
             <div class="field">
               <paper-dropdown-menu label="Student" id="drop">
@@ -94,14 +94,15 @@
             </div> -->
             <div id="id">
             <div class="signup">
-              <div class="buttons reg" style="color:#4e688c;">
-                  <ahref class="admin" on-click="link">Register</ahref>
+              <div class="buttons reg" style="color:#4e688c;">I don't have account..
+                  <ahref class="admin" on-click="link"><u>Register Here..!</u></ahref>
               </div>
-              <div class="buttons activate" style="color:#4e688c;">
-                  <ahref class="admin" on-click="link2">Activate</ahref>
+              <div class="buttons activate" style="color:#4e688c;">Activate
+                  <ahref class="admin" on-click="link2"><u>Here !</u></ahref>
               </div>
+              Or
               <div class="buttons" style="text-align:center; color:#4e688c;">
-                  <ahref class="admin forgotpass" on-click="link3">Forgot Password?</ahref>
+                  <ahref class="admin forgotpass" on-click="link3"><u>Forgot Password?</u></ahref>
               </div>
             </div>
           </div>
@@ -242,6 +243,7 @@
     Polymer({
       is: 'login-form',
     ready:function(){
+      this.$.mobilepass.hidden=true;
         //var Pusher = require('pusher-js/node');
   /*      var pusher = new Pusher('AIzaSyCDMrCpSpzINswYqdu9RsrWGeGnfKRFin0', { cluster: "eu" });
        var pusher = new Pusher('AIzaSyCDMrCpSpzINswYqdu9RsrWGeGnfKRFin0');
@@ -264,7 +266,7 @@
     },
     mobileno:function()
     {
-      this.$.login.mobile(this.mobile);
+      this.$.login.mobile(this.mobile,this.pass);
     },
     newpass:function(){
       if(this.newpassword === ''){
@@ -310,6 +312,7 @@
       this.$.user.hidden=false;
       this.$.pass.hidden=false;
       this.$.sub.hidden=false;
+    this.$.mobilepass.hidden=true;
     },
     teacher:function(){
       //alert('admin');
@@ -317,6 +320,7 @@
       this.$.mob.hidden=true;
       this.$.drop.hidden=true;
       this.$.id.hidden=true;
+      this.$.mobilepass.hidden=true;
     },
     Fnparent:function(){
       //alert('parent');
@@ -327,6 +331,8 @@
       this.$.mob.hidden=false;
       this.$.drop.hidden=false;
       this.$.id.hidden=false;
+      this.$.mobilepass.hidden=false;
+
     },
     login:function(){
       this.$.login.adminlogin(this.username,this.password);
@@ -350,7 +356,7 @@
         this.$.regno.validate();
         this.$.verifyno.validate();
       } else {
-        if(this.newpassword === this.confirmpassword){
+        if(this.newpassword == this.confirmpassword){
           this.$.login.activate(this.newregmob,this.verify,this.confirmpassword);
         }
       }
@@ -399,7 +405,7 @@
       },
       invalidexit:function(){
             document.querySelector('#invaliddialog').close();  
-      }
+      } 
     });
   })();
   </script>

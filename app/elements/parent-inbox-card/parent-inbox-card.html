@@ -173,7 +173,7 @@ label.star:before {
       </iron-collapse>
     </div>
      <paper-toast id="toast" text="Priority level Changed.."></paper-toast>
-     <paper-dialog id="showdial" modal>
+     <paper-dialog id="showdial" >
            <div class="content">
 <h3><center>{{replydialog}}</center></h3>
   
@@ -199,13 +199,13 @@ label.star:before {
       }, 3000)*/
       //alert(this.feedback);
       this.$.studentname.hidden = true;
-      this.$.feedback_rating.hidden = true;
-      this.$.stat.hidden=true;
+      //this.$.feedback_rating.hidden = true;
+      //this.$.stat.hidden=true;
 
-      if(this.feedback>0){
+      /*if(this.feedback>0){
         this.$.feedback_rating.hidden=true;
         this.$.stat.hidden=false;        
-      }
+      }*/
 
       if(this.studentname){
         this.$.studentname.hidden = false;
@@ -248,13 +248,13 @@ this.$.prio1.hidden=true;
         this.$.a4.hidden=true;
         this.$.fwd.hidden=true;
         this.$.reads.hidden=true;
-          if(this.feedback==0){
+          /*if(this.feedback==0){
             this.$.feedback_rating.hidden = false;    
-          }
+          }*/
       }
       if(id=='teacher'){
         this.$.fwd.hidden=true;
-        this.$.feedback_rating.hidden = false;
+        //this.$.feedback_rating.hidden = false;
        this.$.details.hidden=true;
       }
       if(role=='manager'){
@@ -313,8 +313,8 @@ this.$.prio1.hidden=true;
       this.$.qpostid.rating(this.queryid, rating);
     },
     ratingres:function(){
-      this.$.feedback_rating.hidden=true;
-      this.$.stat.hidden=false;
+      //this.$.feedback_rating.hidden=true;
+    //  this.$.stat.hidden=false;
     },
     answer:function(){
       //alert("reply");
@@ -369,7 +369,8 @@ this.$.prio1.hidden=true;
         }
     },
     frwd:function(){
-      this.$.qpostid.updatefrwd(this.queryid,this.comment123,this.date,this.time);
+      var click=1;
+      this.$.qpostid.updatefrwd(this.queryid,this.comment123,this.date,this.time,click);
       document.querySelector("#comments"+this.queryid).opened = false;
     },
     priority:function(e){

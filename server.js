@@ -49,24 +49,11 @@ res.status(200).json('mail sent');
 
 });
 
-app.post('/mobile',  urlencodedParser,function (req, res){
-  var mobile={"mobile":req.query.mobile};
-  connection.query('SELECT school_id,(Select name from md_school where id = school_id) as school_name ,student_id, (select student_name from student_details where id = student_id) as student_name from parent where ? ',[mobile],
-  function(err, rows){
-    if(!err){
-      if(rows.length>0){
-        res.status(200).json({'returnval': rows});
-      } else {
-        res.status(200).json({'returnval': 'no'});
-      }
-    }
-  });
-});
-
 
 app.post('/loginalter',  urlencodedParser,function (req, res){
   var mobile={"new_mobile":req.query.mobile};
-  connection.query('SELECT school_id, (SELECT name FROM md_school WHERE id = school_id) AS school_name, student_id, (SELECT student_name FROM student_details WHERE id = student_id) AS student_name FROM parent WHERE mobile = (SELECT registered_no FROM alternate_no WHERE ? and activate_flag=1) ',[mobile],
+  var pass={"password":req.query.pass};
+  connection.query('SELECT school_id, (SELECT name FROM md_school WHERE id = school_id) AS school_name, student_id, (SELECT student_name FROM student_details WHERE id = student_id) AS student_name FROM parent WHERE mobile = (SELECT registered_no FROM alternate_no WHERE ? and ? and activate_flag=1) ',[mobile,pass],
   function(err, rows){
     if(!err){
       if(rows.length>0){
@@ -778,9 +765,8 @@ app.post('/activate',  urlencodedParser,function (req, res)
 {
     var mob={"new_mobile":req.query.reg};
     var key={"verify_key":req.query.key};
-    var pass={"password":req.query.pass};
-    var flag={"activate_flag":req.query.acti};
-       connection.query('update alternate_no set ? WHERE ? and ? and ?',[flag,key,mob,pass],
+    var flag={"activate_flag":req.query.acti,"password":req.query.pass};
+       connection.query('update alternate_no set ? WHERE ? and ?',[flag,key,mob],
         function(err, rows)
         {
     if(!err)
@@ -794,6 +780,8 @@ app.post('/activate',  urlencodedParser,function (req, res)
     }
 });
   });
+
+
 app.post('/schoolwisereport',  urlencodedParser,function (req, res)
 {
   connection.query('SELECT COUNT(*)as total_queries ,school_id,`category` FROM query GROUP BY school_id ,`category`',

@@ -376,6 +376,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var rep;
     var queryy_id;
     var reply;
+    var escalateclick=0;
     Polymer({
       is: 'query-post',
       
@@ -491,7 +492,7 @@ getmsg:function(){
   obj.schol=sessionStorage.getItem("schoolx");
   obj.userid=sessionStorage.getItem("role");
   this.getmsgparam=obj;
-  //alert(JSON.stringify(obj));
+  alert(JSON.stringify(obj));
   this.$.getmsgid.generateRequest();
   this.unopenmsgurl=sessionStorage.getItem("haddrinfo")+"/unopenmsg";
   var obj={"schol":"","status":"","userid":""}
@@ -533,9 +534,10 @@ getmsgResponse:function(e){
   }
   var inbox=resarr.slice(0,5);
   inboxcount=5;
+  alert(JSON.stringify(inbox));
   document.querySelector('parent-inbox').msgarr=inbox;
   //var msgarr=e.detail.response.returnval;
-  //document.querySelector('parent-inbox').msgarr=msgarr;
+  //doccument.querySelector('parent-inbox').msgarr=msgarr;
   //alert(JSON.stringify(msgarr));
 },
 postreply:function(queryid,reply,statusx,date,time){
@@ -720,7 +722,8 @@ managerinboxResponse:function(e){
 }
   //alert(JSON.stringify(msgarr));
 },
-updatefrwd:function(querid,msg,date,time){
+updatefrwd:function(querid,msg,date,time,click){
+  escalateclick=click;
   this.updatefwdurl=sessionStorage.getItem("haddrinfo")+"/updatefwd";
   var obj={"id":"","date":"","time":"","comments":"","frwd":"","schol":"","roles":""}
   obj.id=querid;
@@ -737,7 +740,7 @@ updatefrwd:function(querid,msg,date,time){
 updatefwdResponse:function(e){
   var res=e.detail.response.returnval;
   var user=sessionStorage.getItem("role");
-  if(res=='success'){
+  if((res=='success')&&(escalateclick==1)){
       if(user=='principal'){
           reply='Escalated to Management';
           document.querySelector('parent-inbox-card').showdialog(reply);

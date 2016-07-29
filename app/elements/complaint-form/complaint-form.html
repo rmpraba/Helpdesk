@@ -162,6 +162,9 @@ label.star:before {
           this.$.qpostid.checkstatus();
           this.$.qpostid.feedcheck();
         category=(e.target.selectedItem.textContent).trim();
+        if(category=='Others'){
+          category='Relation';
+        }
       },
 
       click:function()
