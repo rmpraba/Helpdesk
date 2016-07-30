@@ -137,6 +137,17 @@
         debounce-duration="300"
         >
   </iron-ajax>
+  <iron-ajax
+        method="post"
+        id="recoversendmailajax"
+        url="{{recoversendmailurl}}"
+        params="{{recoversendmailparam}}"
+        handle-as="json"
+        content-type="application/json"
+        on-response="recoversendmailResponse"
+        debounce-duration="300"
+        >
+  </iron-ajax>
    
    <query-post id="qpostid"></query-post>
   </template>
@@ -195,10 +206,18 @@
           document.querySelector('transport-app').setPage("complaintpage");
         }
         else if ((role=="Academics"||role=="Administration"||role=="Transport"||role=="Facilities"||role=="Finance"||role=="Relation")&&(icon=="staff")) {
+          if(role=="Academics"){
+            document.querySelector('icon-card').Fnadmin();
+          this.$.qpostid.getgradecoor(); 
+          document.querySelector('app-card').setPage("transport");
+          document.querySelector('transport-app').setPage("parent-inbox");  
+          }
+            else{
           document.querySelector('icon-card').Fnadmin();
           this.$.qpostid.getmsg(); 
           document.querySelector('app-card').setPage("transport");
           document.querySelector('transport-app').setPage("parent-inbox");       
+        }
         }
         else if ((id == "teacher")&&(icon=="staff")){
           this.$.qpostid.teacherinbox();
@@ -321,10 +340,18 @@ var res=e.detail.response.returnval;
           document.querySelector('app-card').setPage("transport");
           document.querySelector('transport-app').setPage("complaintpage");
         } else if ((id=="admin"||role=="Academics"||role=="Administration"||role=="Transport"||role=="Facilities"||role=="Finance"||role=="Relation")&&(icon=="staff")) {
+          if(role=="Academics"){
+               document.querySelector('icon-card').Fnadmin();
+          this.$.qpostid.getgradecoor(); 
+          document.querySelector('app-card').setPage("transport");
+          document.querySelector('transport-app').setPage("parent-inbox");  
+          }
+            else{
           document.querySelector('icon-card').Fnadmin();
           this.$.qpostid.getmsg(); 
           document.querySelector('app-card').setPage("transport");
           document.querySelector('transport-app').setPage("parent-inbox");       
+          }
         }
         else{
           reply='Login in Your Proper Gateway';
@@ -407,7 +434,8 @@ var res=e.detail.response.returnval;
         var stud_name=e.detail.response.returnval[0].student_name;
         var std=e.detail.response.returnval[0].std;
         var sec=e.detail.response.returnval[0].sec;
-        var classs=std+'-'+sec;
+        //var classs=std+'-'+sec;
+        var classs=std;
         //alert(stud_name+'   '+classs);
         document.querySelector('complaint-form').student_name=stud_name;
         document.querySelector('complaint-form').classes=classs;
@@ -420,7 +448,7 @@ var res=e.detail.response.returnval;
       obj.acti=1;
       obj.pass = pass;
       this.activateparam=obj;
-      alert(JSON.stringify(obj));
+      //alert(JSON.stringify(obj));
       this.$.activateajax.generateRequest();
     },
     activateResponse:function(e){

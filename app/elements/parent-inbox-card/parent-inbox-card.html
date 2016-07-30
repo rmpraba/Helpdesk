@@ -153,6 +153,7 @@ label.star:before {
         <div class="buttons">
           <paper-button id="reply-button" on-click="answer">Reply</paper-button>
           <paper-button id="fwd" on-click="send">Escalate</paper-button>
+          <paper-button id="forward" on-click="forward">Forward</paper-button>
         </div>
       </iron-collapse>
        <iron-collapse id="comments{{queryid}}" class="dialog">
@@ -182,6 +183,24 @@ label.star:before {
 </div>
 </div>
  </paper-dialog>
+ <paper-dialog id="selectfrwd">
+ <div>
+    <paper-dropdown-menu label="Category" id="category">
+              <paper-menu id="category" required error-message="Need a Category!" class="dropdown-content" on-iron-select="Fncategory" valueattr="value">
+                <paper-listbox class="dropdown-content">
+                  <paper-item value="academics"><paper-icon-button  class="category_icon" src="../../images/book_icon.png"></paper-icon-button>Academics</paper-item>
+                  <paper-item value="adminstration"><paper-icon-button  class="category_icon" src="../../images/administration_icon.png"></paper-icon-button>Administration</paper-item>
+                  <paper-item id="transport" value="transport"><paper-icon-button  class="category_icon" src="../../images/schoolbus_icon.png"></paper-icon-button>Transport</paper-item>
+                  <paper-item value="facilities"><paper-icon-button  class="category_icon" src="../../images/facilities_icon.png"></paper-icon-button>Facilities</paper-item>
+                  <paper-item value="Finance"><paper-icon-button  class="category_icon" src="../../images/finance.png"></paper-icon-button>Finance</paper-item>
+                  
+                </paper-listbox>
+              </paper-menu>
+            </paper-dropdown-menu>
+ </div>
+ <paper-button class="button" on-click="sendfrwd">Send</paper-button>
+ </paper-dialog>
+ <paper-toast id="frwdtoast" text="Forwarded Successfully.."></paper-toast>
     <query-post id='qpostid'></query-post>
   </template> 
   <script>
@@ -189,6 +208,7 @@ label.star:before {
     'use strict';
       var statusx="open";
       var flag=1;
+      var category;
     Polymer({
       is: 'parent-inbox-card',
       
@@ -199,6 +219,7 @@ label.star:before {
       }, 3000)*/
       //alert(this.feedback);
       this.$.studentname.hidden = true;
+      this.$.forward.hidden=true;
       //this.$.feedback_rating.hidden = true;
       //this.$.stat.hidden=true;
 
@@ -237,6 +258,9 @@ this.$.prio1.hidden=true;
       if(id=='admin'){
         this.$.readson.hidden=true;
         this.$.reads.hidden=true;
+        if(role=='Relation'){
+          this.$.forward.hidden=false;
+        }
       }
       if(id=='parent'){
         this.$.details.hidden=true;
@@ -390,7 +414,26 @@ this.$.prio1.hidden=true;
       var id = 'showdial';
         var dialog = document.getElementById(id);
         dialog.close();
-    }
+    },
+    forward:function(){
+      var id = 'selectfrwd';
+        var dialog = document.getElementById(id);
+        dialog.open();
+   },
+   Fncategory:function(e){
+    category=(e.target.selectedItem.textContent).trim();
+    alert(category);
+   },
+   sendfrwd:function(){
+    this.$.qpostid.relationfrwd(this.queryid,this.stid,this.time,this.date,category);
+      var id = 'selectfrwd';
+        var dialog = document.getElementById(id);
+        dialog.close();
+
+   },
+   frwdresponse:function(){
+       this.$.frwdtoast.open();
+   }
     
     });
   })();

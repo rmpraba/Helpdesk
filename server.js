@@ -73,7 +73,7 @@ app.post('/loginalter',  urlencodedParser,function (req, res){
 
 app.post('/query-post1',  urlencodedParser,function (req, res)
 {
-  var dv={"school_id":req.query.school_id,"query_id":req.query.query_id,"query_reply":"","student_id":req.query.student_id,"parent_name":req.query.name,"parent_email":req.query.email,"category":req.query.category,"query_message":req.query.complaint,"query_status":req.query.status,"updated_date":req.query.date,"time":req.query.time,"flag":req.query.flag,"subject":req.query.subject,"mobile":req.query.mob,"msg_status":req.query.msq_status,"priority":req.query.priority};
+  var dv={"school_id":req.query.school_id,"query_id":req.query.query_id,"query_reply":"","student_id":req.query.student_id,"parent_name":req.query.name,"parent_email":req.query.email,"category":req.query.category,"query_message":req.query.complaint,"query_status":req.query.status,"updated_date":req.query.date,"time":req.query.time,"flag":req.query.flag,"subject":req.query.subject,"mobile":req.query.mob,"msg_status":req.query.msq_status,"priority":req.query.priority,"grade":req.query.class};
 
        connection.query('insert into query set ?',[dv],
         function(err, rows)
@@ -1130,6 +1130,94 @@ app.post('/checktransportreq',  urlencodedParser,function (req, res)
   
 });
   });
+
+
+app.post('/getmsgcoor',  urlencodedParser,function (req, res)
+{
+  var school_id={"school_id":req.query.schol};
+    var status={"query_status":"open"};
+    var grade={"grade":req.query.class};
+  var userid={"category":req.query.userid};
+
+ //console.log(school_id+'  '+status+'  '+userid);
+       connection.query('select *,(select student_name from student_details where id = student_id and school_id = school_id) as name from query where ? and ? and ? and ?',[school_id,status,userid,grade],
+
+        function(err, rows)
+        {
+    if(!err)
+    {
+    if(rows.length>0){
+        res.status(200).json({'returnval': rows});
+        //console.log(rows);
+        } else {
+        console.log(err);
+        res.status(200).json({'returnval': 'invalid'});
+      }
+    }
+    else
+    {
+
+      res.status(200).json({'returnval': 'invalid'});
+    }
+  
+});
+  });
+
+app.post('/getgradecoor',  urlencodedParser,function (req, res)
+{
+  var school_id={"school_id":req.query.schol};
+  var userid={"staff_id":req.query.userid};
+
+ //console.log(school_id+'  '+status+'  '+userid);
+       connection.query('select * from coordinator_details where ? and ?',[school_id,userid],
+
+        function(err, rows)
+        {
+    if(!err)
+    {
+    if(rows.length>0){
+        res.status(200).json({'returnval': rows});
+        //console.log(rows);
+        } else {
+        console.log(err);
+        res.status(200).json({'returnval': 'invalid'});
+      }
+    }
+    else
+    {
+
+      res.status(200).json({'returnval': 'invalid'});
+    }
+  
+});
+  });
+
+
+app.post('/relationfrwd',  urlencodedParser,function (req, res)
+{
+    var id={"query_id":req.query.sid};
+    var date={"updated_date":req.query.date};
+    var time={"time":req.query.time};
+    var status={"category":req.query.cate};
+    var school_id={"school_id":req.query.schol};
+
+  //console.log('update  '+);
+       connection.query('update query set ? WHERE ? and ? and ? and ?',[status,id,school_id,date,time],
+        function(err, rows)
+        {
+    if(!err)
+    {
+          res.status(200).json({'returnval': 'success'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+  
+});
+  });
+
 
 
 /*var Pusher = require('pusher');

@@ -345,6 +345,36 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     on-response="checktransportreqResponse"
     debounce-duration="300"
   ></iron-ajax>
+   <iron-ajax
+    method="post"
+    id="getmsgcoorajax"
+    url="{{getmsgcoorurl}}"
+    params="{{getmsgcoorparam}}"
+    handle-as="json"
+    content-type="application/json"
+    on-response="getmsgcoorResponse"
+    debounce-duration="300"
+  ></iron-ajax>
+     <iron-ajax
+    method="post"
+    id="getgradecoorajax"
+    url="{{getgradecoorurl}}"
+    params="{{getgradecoorparam}}"
+    handle-as="json"
+    content-type="application/json"
+    on-response="getgradecoorResponse"
+    debounce-duration="300"
+  ></iron-ajax>
+  <iron-ajax
+    method="post"
+    id="relationfrwdajax"
+    url="{{relationfrwdurl}}"
+    params="{{relationfrwdparam}}"
+    handle-as="json"
+    content-type="application/json"
+    on-response="relationfrwdResponse"
+    debounce-duration="300"
+  ></iron-ajax>
     <style>
       :host {
         display: block;
@@ -377,6 +407,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var queryy_id;
     var reply;
     var escalateclick=0;
+    var classes;
     Polymer({
       is: 'query-post',
       
@@ -415,7 +446,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
              document.querySelector('complaint-form').statfeed=ans;     
           }
       },
-      querypostFn:function(student_id,name,email,category,complaint,mob){
+      querypostFn:function(student_id,name,email,category,complaint,mob,classesx){
         //alert('hai');
         stud_id=student_id;
         sname=name;
@@ -423,6 +454,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         scat=category;
         scomplaint=complaint;
         mobile=mob;
+        classes=classesx;
 
 
         var obj={"school_id":""};
@@ -440,7 +472,7 @@ sequenceResponse:function(e){
     var thistime = (h > 12) ? (h-12 + ':' + m +' PM') : (h + ':' + m +' AM');
   //alert(JSON.stringify(e.detail.response.returnval));
   var seq=e.detail.response.returnval[0].sequenceno;
-  var obj={"student_id":"","date":"","time":"","name":"","email":"","category":"","complaint":"","queryid":"","flag":"","subject":"","mob":"","msq_status":"","priority":""};
+  var obj={"student_id":"","date":"","time":"","name":"","email":"","category":"","complaint":"","queryid":"","flag":"","subject":"","mob":"","msq_status":"","priority":"","class":""};
         obj.school_id=sessionStorage.getItem("schoolx");
         obj.query_id='PKT1600'+seq;
         obj.student_id=stud_id;
@@ -456,6 +488,7 @@ sequenceResponse:function(e){
         obj.mob=mobile;
         obj.msq_status=1;
         obj.priority="Moderate";
+        obj.class=classes;
         this.queryposturl=sessionStorage.getItem("haddrinfo")+"/query-post1";
         this.querypostparam=obj;
        this.$.querypostid.generateRequest()
@@ -492,7 +525,7 @@ getmsg:function(){
   obj.schol=sessionStorage.getItem("schoolx");
   obj.userid=sessionStorage.getItem("role");
   this.getmsgparam=obj;
-  alert(JSON.stringify(obj));
+  //alert(JSON.stringify(obj));
   this.$.getmsgid.generateRequest();
   this.unopenmsgurl=sessionStorage.getItem("haddrinfo")+"/unopenmsg";
   var obj={"schol":"","status":"","userid":""}
@@ -534,7 +567,7 @@ getmsgResponse:function(e){
   }
   var inbox=resarr.slice(0,5);
   inboxcount=5;
-  alert(JSON.stringify(inbox));
+  //alert(JSON.stringify(inbox));
   document.querySelector('parent-inbox').msgarr=inbox;
   //var msgarr=e.detail.response.returnval;
   //doccument.querySelector('parent-inbox').msgarr=msgarr;
@@ -1179,7 +1212,7 @@ checktransportreq:function(id){
     obj.schol=sessionStorage.getItem("schoolx");
     obj.studid=id;
     this.checktransportreqparam=obj;
-    alert(JSON.stringify(obj));
+    //alert(JSON.stringify(obj));
     this.$.checktransportreqajax.generateRequest();
 },
 checktransportreqResponse:function(e){
@@ -1188,6 +1221,63 @@ checktransportreqResponse:function(e){
       document.querySelector('complaint-form').Fnyes();
     }
 
+},
+getgradecoor:function(){
+    this.getgradecoorurl=sessionStorage.getItem("haddrinfo")+"/getmsgcoor";
+  var obj={"schol":"","userid":""}
+  obj.schol=sessionStorage.getItem("schoolx");
+  obj.userid=sessionStorage.getItem("userid");
+  this.getgradecoorparam=obj;
+  //alert(JSON.stringify(obj));
+  this.$.getgradecoorajax.generateRequest();
+},
+getgradecoorResponse:function(e){
+  var res=e.detail.response.returnval[0].grade;
+  this.getmsgcoorurl=sessionStorage.getItem("haddrinfo")+"/getgradecoor";
+  var obj={"schol":"","class":"","userid":""}
+  obj.schol=sessionStorage.getItem("schoolx");
+  obj.userid=sessionStorage.getItem("role");
+  obj.class=res;
+  this.getmsgcoorparam=obj;
+  //alert(JSON.stringify(obj));
+  this.$.getmsgcoorajax.generateRequest();
+
+},
+getmsgcoorResponse:function(e){
+  var resarr=e.detail.response.returnval;
+  if(resarr=="invalid")
+  {
+    document.querySelector('parent-inbox').showNomsg();
+  }
+  var inbox=resarr.slice(0,5);
+  inboxcount=5;
+  //alert(JSON.stringify(inbox));
+  document.querySelector('parent-inbox').msgarr=inbox;
+},
+relationfrwd:function(id,sid,time,date,categ){
+  //alert(category);
+    stid=sid;
+this.relationfrwdurl=sessionStorage.getItem("haddrinfo")+"/relationfrwd";
+var obj={"sid":"","time":"","date":"","schol":"","cate":""}
+obj.sid=id;
+obj.time=time;
+obj.date=date;
+obj.schol=sessionStorage.getItem("schoolx");
+obj.cate=categ;
+
+this.relationfrwdparam=obj;
+//alert(JSON.stringify(obj));
+this.$.relationfrwdajax.generateRequest();
+},
+relationfrwdResponse:function(e){
+  var res=e.detail.response.returnval;
+  if(res=='success'){
+    document.querySelector('icon-card').Fnadmin();
+          this.getmsg(); 
+          document.querySelector('app-card').setPage("transport");
+          document.querySelector('transport-app').setPage("parent-inbox");
+      document.querySelector('parent-inbox-card').frwdresponse();  
+  }
 }
   });
   })();
