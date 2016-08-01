@@ -20,7 +20,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         width: 50%;
         margin: 17% auto;
         padding: 0 20%;
-        position: relative;
+        position: absolute;
       }
       #one{
         float: left;
@@ -102,22 +102,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           width:100%;
 
         }
+        .background-img{        }
       }
     </style>
-    <div class="icon">
-    <div id="one">
-      <paper-icon-button id="parent-icon" class="iconbutton" on-click="parents" src="../../images/parents.png"></paper-icon-button>
-    </div>
-    <div id="two">
-      <paper-icon-button id="admin" class="iconbutton" on-click="admins" src="../../images/admin.png"></paper-icon-button>
-    </div>
-    <div id="three">
-      <paper-icon-button id="teacher" class="iconbutton" on-click="loginform" src="../../images/teacher.png"></paper-icon-button>
-    </div>
+    <div class="background-img" style="background-image: url('../../images/schools-bg1.jpg');background-repeat: no-repeat; position: fixed; width: 100%;min-height: 100%;">
+        <div style="width:30%; margin:10% auto;">
+          <login-form></login-form>
+        </div>
     </div>
     <paper-dialog id="dialogqwertyu">
           <h2>{{replyhere}}</h2>
-          
           <div class="buttons">
             <paper-button on-click="exit">Ok</paper-button>
           </div>
@@ -133,7 +127,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       parents:function(){
         //alert('1');
         var qwert="parent";
-        document.querySelector('app-card').setPage('login');
         document.querySelector('login-form').Fnparent();
         sessionStorage.setItem("icons",qwert);
       },
@@ -142,13 +135,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var qwert="manager";
         //alert(qwert);
         sessionStorage.setItem("icons",qwert);
-        document.querySelector('app-card').setPage('login');
         document.querySelector('login-form').admin();
       },
       loginform:function(){
         var qwert="staff";
         sessionStorage.setItem("icons",qwert);
-        document.querySelector('app-card').setPage('login');
         document.querySelector('login-form').hideParentLogin();
       },
       zxcvdialog:function(reply){

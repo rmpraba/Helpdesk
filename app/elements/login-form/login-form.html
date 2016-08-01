@@ -59,11 +59,22 @@
         <div class="row">
           <input type="hidden" name="role" value="{{role}}">
           <div class="container login-card">
-          <div class="backicon">
-              <paper-icon-button class="iconbutton" on-click="back" src="../../images/back.png"></paper-icon-button>
-          </div>
+          <paper-tabs>
+            <paper-tab on-click="Fnparent">
+              Parent
+            </paper-tab>
+            <paper-tab on-click="hideParentLogin">
+              Staff
+            </paper-tab>
+            <paper-tab on-click="admin">
+              Management
+            </paper-tab>
+          </paper-tabs>
+          <!-- <div class="backicon">
+              <paper-icon-button class="iconbutton" on-click="back" src="../../images/schoollogo.jpg"></paper-icon-button>
+          </div> -->
             <div class="icon">
-              <paper-icon-button class="iconbutton" src="../../images/login-icon.png"></paper-icon-button>
+              <paper-icon-button class="iconbutton" src="../../images/schoollogo.png"></paper-icon-button>
             </div>
             <div class="field" id="mob">
               <paper-input label="Mobile Number" value="{{mobile}}" id="mobile" allowed-pattern="[0-9]" required error-message="Mobile Number"></paper-input>
@@ -94,13 +105,12 @@
             </div> -->
             <div id="id">
             <div class="signup">
-              <div class="buttons reg" style="color:#4e688c;">I don't have account..
+              <div class="buttons reg" style="color:#4e688c;">
                   <ahref class="admin" on-click="link"><u>Register Here..!</u></ahref>
               </div>
-              <div class="buttons activate" style="color:#4e688c;">Activate
-                  <ahref class="admin" on-click="link2"><u>Here !</u></ahref>
+              <div class="buttons activate" style="color:#4e688c;">
+                  <ahref class="admin" on-click="link2"><u>Activate</u></ahref>
               </div>
-              Or
               <div class="buttons" style="text-align:center; color:#4e688c;">
                   <ahref class="admin forgotpass" on-click="link3"><u>Forgot Password?</u></ahref>
               </div>
@@ -244,6 +254,7 @@
       is: 'login-form',
     ready:function(){
       this.$.mobilepass.hidden=true;
+      this.Fnparent();
         //var Pusher = require('pusher-js/node');
   /*      var pusher = new Pusher('AIzaSyCDMrCpSpzINswYqdu9RsrWGeGnfKRFin0', { cluster: "eu" });
        var pusher = new Pusher('AIzaSyCDMrCpSpzINswYqdu9RsrWGeGnfKRFin0');
@@ -299,9 +310,11 @@
       }
     },
     hideParentLogin:function(){
+      this.$.user.hidden=false;
       this.$.mob.hidden=true;
       this.$.drop.hidden=true;
       this.$.id.hidden=true;
+      this.$.sub.hidden=false;
     },
     admin:function(){
       //alert('admin');

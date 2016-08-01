@@ -165,10 +165,12 @@ body{
     padding: 1%;
 }
 .login-card{
-    width: 25%;
-    height: 100%;
+    width: 80%;
+    height: 375px;
     margin: 5% auto;
-    background-color: #ffffff;
+    background:rgba(255,255,255,0.7);
+    padding: 5%;
+
 }
 .container.registration{
     width: 60%;

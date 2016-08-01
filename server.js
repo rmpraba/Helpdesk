@@ -64,7 +64,9 @@ app.post('/loginalter',  urlencodedParser,function (req, res){
       }
     }
     else{
+      console.log('hi');
       console.log(err);
+      console.log('hi2');
     }
   });
 });
