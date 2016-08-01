@@ -49,7 +49,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             </div>
             <div class="field">
               <paper-checkbox id="samenumber" on-click="same">Check if the Registered mobile and new mobile number are same</paper-checkbox>
-              <paper-input label="New Mobile Number" id="newmobileno" value="{{newmobile}}" allowed-pattern="[0-9]" required error-message="Mobile Number"></paper-input>
+              <paper-input label="New Mobile Number" id="newmobileno" value="{{newmobile}}" allowed-pattern="[0-9]" required error-message="Mobile Number" on-change="verifynew"></paper-input>
             </div>
             <div class="field" id="mob">
               <paper-input label="Email ID(Optional)" value="{{email}}" id="mobile"></paper-input>
@@ -137,6 +137,12 @@ var relation;
           var id = 'asdf';
         var dialog = document.getElementById(id);
         dialog.close();
+      },
+      verifynew:function(){
+        this.$.qpostid.verifynewmobile(this.newmobile);
+      },
+      Fnclearnew:function(){
+        this.newmobile="";
       }
     
     });

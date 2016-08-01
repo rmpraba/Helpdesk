@@ -22,8 +22,8 @@ app.post('/regemailsend', urlencodedParser,function (req, res) {
   var mobilenumber=req.query.regmobnew;
   var relation=req.query.regrel;
   var verificationcode=req.query.regverify;
-  var emailreg=req.query.regmail;
-  console.log(username+'   '+mobilenumber+'   '+relation+'   '+verificationcode+'   '+emailreg);
+  var emailreg=req.query.regemail;
+  //console.log(username+'   '+mobilenumber+'   '+relation+'   '+verificationcode+'   '+emailreg);
 
 var server  = email.server.connect({
    user:    "mlzssamsidh@yahoo.com",
@@ -36,8 +36,8 @@ var server  = email.server.connect({
 server.send({
    text:    "Regarding OTP for Helpdesk MLTS",
    from:    "mlzssamsidh@yahoo.com",
-   to:      "kartiksubu.krs@gmail.com",
-   subject: "FEE RECEIPT/ACKNOWLEDGEMENT",
+   to:      emailreg,
+   subject: "Regarding OTP",
     attachment:
 
       [
@@ -1219,6 +1219,79 @@ app.post('/relationfrwd',  urlencodedParser,function (req, res)
   });
 
 
+
+app.post('/unopencoormsg',  urlencodedParser,function (req, res)
+{
+  var school_id={"school_id":req.query.schol};
+  var status = {"msg_status":req.query.status};
+  var userid={"category":req.query.userid};
+  var grade={"grade":req.query.class};
+  
+  connection.query('SELECT COUNT( * ) as total FROM  `query` WHERE ? AND ? and ?',[status,school_id,userid,grade],
+  function(err, rows)
+  {
+    if(!err)
+    {
+    if(rows.length>0){
+        res.status(200).json({'returnval': rows});
+        //console.log(rows);
+        } else {
+        console.log(err);
+        res.status(200).json({'returnval': 'invalid'});
+      }
+    }
+    else
+    {
+
+      res.status(200).json({'returnval': 'invalid'});
+    }
+  
+});
+  });
+
+app.post('/upmsgcoorstat',  urlencodedParser,function (req, res)
+{
+    var id={"query_id":req.query.sid};
+    var date={"updated_date":req.query.date};
+    var time={"time":req.query.time};
+    var status={"msg_status":req.query.msg_status};
+    var school_id={"school_id":req.query.schol};
+       connection.query('update query set ? WHERE ? and ? and ? and ?',[status,id,school_id,date,time],
+        function(err, rows)
+        {
+    if(!err)
+    {
+          res.status(200).json({'returnval': 'success'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+  
+});
+  });
+
+
+app.post('/verifynewmobile',  urlencodedParser,function (req, res)
+{
+    var mobileno={"new_mobile":req.query.mob};
+  //console.log('update  '+);
+       connection.query('select * from alternate_no where ?',[mobileno],
+        function(err, rows)
+        {
+    if(!err)
+    {
+          res.status(200).json({'returnval': 'success'});
+    }
+    else
+    {
+      console.log(err);
+      res.status(200).json({'returnval': 'invalid'});
+    }
+  
+});
+  });
 
 /*var Pusher = require('pusher');
 

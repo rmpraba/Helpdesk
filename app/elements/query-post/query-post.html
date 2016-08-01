@@ -125,6 +125,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   ></iron-ajax>
    <iron-ajax
     method="post"
+    id="upmsgcoorstatid"
+    url="{{upmsgcoorstaturl}}"
+    params="{{upmsgcoorstatparam}}"
+    handle-as="json"
+    content-type="application/json"
+    on-response="upmsgcoorstatResponse"
+    debounce-duration="300"
+  ></iron-ajax>
+   <iron-ajax
+    method="post"
     id="unreadmsgid"
     url="{{unreadmsgurl}}"
     params="{{unreadmsgparam}}"
@@ -133,6 +143,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     on-response="unreadmsgResponse"
     debounce-duration="300"
   ></iron-ajax>
+  <!-- to read the total number of unpened msg for admins except academics -->
   <iron-ajax
     method="post"
     id="unopenmsgid"
@@ -141,6 +152,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     handle-as="json"
     content-type="application/json"
     on-response="unopenmsgResponse"
+    debounce-duration="300"
+  ></iron-ajax>
+<!-- to read the total number unread msg for the academics admin -->
+<iron-ajax
+    method="post"
+    id="unopencoormsgid"
+    url="{{unopencoormsgurl}}"
+    params="{{unopencoormsgparam}}"
+    handle-as="json"
+    content-type="application/json"
+    on-response="unopencoormsgResponse"
     debounce-duration="300"
   ></iron-ajax>
   <iron-ajax
@@ -375,6 +397,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     on-response="relationfrwdResponse"
     debounce-duration="300"
   ></iron-ajax>
+   <iron-ajax
+    method="post"
+    id="verifynewmobileajax"
+    url="{{verifynewmobileurl}}"
+    params="{{verifynewmobileparam}}"
+    handle-as="json"
+    content-type="application/json"
+    on-response="verifynewmobileResponse"
+    debounce-duration="300"
+  ></iron-ajax>
     <style>
       :host {
         display: block;
@@ -408,6 +440,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var reply;
     var escalateclick=0;
     var classes;
+    var res;
     Polymer({
       is: 'query-post',
       
@@ -474,7 +507,7 @@ sequenceResponse:function(e){
   var seq=e.detail.response.returnval[0].sequenceno;
   var obj={"student_id":"","date":"","time":"","name":"","email":"","category":"","complaint":"","queryid":"","flag":"","subject":"","mob":"","msq_status":"","priority":"","class":""};
         obj.school_id=sessionStorage.getItem("schoolx");
-        obj.query_id='TicketNo:1600'+seq;
+        obj.query_id='TicketNo1600'+seq;
         obj.student_id=stud_id;
         obj.name=sname;
         obj.email=semail;
@@ -1087,7 +1120,7 @@ regmobResponse:function(e){
     obj.regrel=regrelation;
     obj.regemail=regmail;
     this.regmailparam=obj;
-    //alert(this.regmailparam);
+    //alert(JSON.stringify(obj));
     this.$.regmailajax.generateRequest();
     document.querySelector('app-card').setPage("login");
   }
@@ -1223,25 +1256,76 @@ checktransportreqResponse:function(e){
 
 },
 getgradecoor:function(){
-    this.getgradecoorurl=sessionStorage.getItem("haddrinfo")+"/getmsgcoor";
+    this.getgradecoorurl=sessionStorage.getItem("haddrinfo")+"/getgradecoor";
   var obj={"schol":"","userid":""}
   obj.schol=sessionStorage.getItem("schoolx");
   obj.userid=sessionStorage.getItem("userid");
   this.getgradecoorparam=obj;
-  //alert(JSON.stringify(obj));
+  //alert('grade  '+JSON.stringify(obj));
   this.$.getgradecoorajax.generateRequest();
 },
 getgradecoorResponse:function(e){
-  var res=e.detail.response.returnval[0].grade;
-  this.getmsgcoorurl=sessionStorage.getItem("haddrinfo")+"/getgradecoor";
+  res=e.detail.response.returnval[0].grade;
+  //alert(res);
+  this.getmsgcoorurl=sessionStorage.getItem("haddrinfo")+"/getmsgcoor";
   var obj={"schol":"","class":"","userid":""}
   obj.schol=sessionStorage.getItem("schoolx");
   obj.userid=sessionStorage.getItem("role");
   obj.class=res;
   this.getmsgcoorparam=obj;
-  //alert(JSON.stringify(obj));
+  //alert('coor grade'+JSON.stringify(obj));
   this.$.getmsgcoorajax.generateRequest();
 
+
+   this.unopencoormsgurl=sessionStorage.getItem("haddrinfo")+"/unopencoormsg";
+  var obj1={"schol":"","status":"","userid":"","class":""}
+  obj1.schol=sessionStorage.getItem("schoolx");
+  obj1.userid=sessionStorage.getItem("role");
+  obj.class=res;
+  obj1.status=1;
+  this.unopencoormsgparam=obj;
+  this.$.unopencoormsgid.generateRequest();
+},
+upmsgcoorstat:function(id,sid,time,date){
+  queryy_id = id;
+       
+  var todaydate=new Date();
+  var dd = todaydate.getDate();
+  var mon = todaydate.getMonth();
+  var year = todaydate.getFullYear();
+  var chdate = dd+"/"+mon+"/"+year;
+  this.upmsgcoorstaturl=sessionStorage.getItem("haddrinfo")+"/upmsgcoorstat";
+  var obj={"sid":"","time":"","date":"","msg_status":"","schol":"", "admin_reads_message":"" }
+  obj.sid=queryy_id;
+  obj.time=time;
+  obj.date=date;
+  obj.schol=sessionStorage.getItem("schoolx");
+  obj.admin_reads_message= chdate;
+  obj.msg_status=2;
+  this.upmsgcoorstatparam=obj;
+  //alert(JSON.stringify(obj));
+  this.$.upmsgcoorstatid.generateRequest();
+},
+upmsgcoorstatResponse:function(e){
+  var res=e.detail.response.returnval;
+  if(res=='success')
+  {
+    //alert('messaged is opened now');
+  }
+ this.unopencoormsgurl=sessionStorage.getItem("haddrinfo")+"/unopencoormsg";
+  var obj1={"schol":"","status":"","userid":"","class":""}
+  obj1.schol=sessionStorage.getItem("schoolx");
+  obj1.userid=sessionStorage.getItem("role");
+  obj1.class=res;
+  obj1.status=1;
+  this.unopencoormsgparam=obj;
+  this.$.unopencoormsgid.generateRequest();
+
+
+},
+unopencoormsgResponse:function(){
+  var resno=e.detail.response.returnval[0].total;
+  document.querySelector('icon-card').unread=resno;
 },
 getmsgcoorResponse:function(e){
   var resarr=e.detail.response.returnval;
@@ -1251,7 +1335,8 @@ getmsgcoorResponse:function(e){
   }
   var inbox=resarr.slice(0,5);
   inboxcount=5;
-  //alert(JSON.stringify(inbox));
+  //alert(JSON.stringify(inbox.length));
+  document.querySelector('icon-card').unread=inbox.length;
   document.querySelector('parent-inbox').msgarr=inbox;
 },
 relationfrwd:function(id,sid,time,date,categ){
@@ -1273,10 +1358,28 @@ relationfrwdResponse:function(e){
   var res=e.detail.response.returnval;
   if(res=='success'){
     document.querySelector('icon-card').Fnadmin();
-          this.getmsg(); 
+          
           document.querySelector('app-card').setPage("transport");
           document.querySelector('transport-app').setPage("parent-inbox");
       document.querySelector('parent-inbox-card').frwdresponse();  
+      this.getmsg(); 
+  }
+},
+verifynewmobile:function(newmob){
+    this.verifynewmobileurl=sessionStorage.getItem("haddrinfo")+"/verifynewmobile";
+var obj={"mob":""}
+obj.mob=newmob;
+this.verifynewmobileparam=obj;
+//alert(JSON.stringify(obj));
+this.$.verifynewmobileajax.generateRequest();
+},
+verifynewmobileResponse:function(e){
+  var res=e.detail.response.returnval;
+  //alert('resdf'+res);
+  if(res=='success'){
+    var resp='Given number is already Registered \n Be sure to enter a new Mobile Number..';
+    document.querySelector('registration-form').showdialog(resp);
+    document.querySelector('registration-form').Fnclearnew();
   }
 }
   });
