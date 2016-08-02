@@ -102,7 +102,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           width:100%;
 
         }
-        .background-img{        }
       }
     </style>
     <div class="background-img" style="background-image: url('../../images/schools-bg1.jpg');background-repeat: no-repeat; position: fixed; width: 100%;min-height: 100%;">
@@ -116,6 +115,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <paper-button on-click="exit">Ok</paper-button>
           </div>
         </paper-dialog>
+      <paper-dialog modal id="selectchild" style="text-align:center; margin: 0 auto;">
+        <h3>Select Your Child</h3>
+        <paper-dropdown-menu  label="Student"  id="drop">
+          <paper-listbox id="student" class="dropdown-content"  required on-iron-select="student" valueattr="value">
+            <template is="dom-repeat" items="{{studentarr}}" as="view">
+              <paper-item value="{{view.student_id}}">{{view.student_name}}</paper-item>
+            </template>
+          </paper-listbox>
+        </paper-dropdown-menu>
+      </paper-dialog>
+    <login-service id="login"></login-service>
+    <query-post id="qpostid"></query-post>
   </template>
   <script>
   (function() {
@@ -123,7 +134,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     Polymer({
       is: 'loginicon-card',
-
       parents:function(){
         //alert('1');
         var qwert="parent";
@@ -150,6 +160,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
       exit:function(){
         var id = 'dialogqwertyu';
+        var dialog = document.getElementById(id);
+        dialog.close();
+      },
+      student:function(e){
+        var id=e.target.selectedItem.value;
+        //alert(e.target.selectedItem.value);
+        this.$.qpostid.checktransportreq(id);
+        sessionStorage.setItem("studid",id);
+        this.$.login.getdetails(id);
+        
+      sessionStorage.setItem("user","parent");
+      },
+      selectchild:function(){
+        var id = 'selectchild';
+        var dialog = document.getElementById(id);
+        dialog.open();
+      },
+      closedialog:function(){
+        var id = 'selectchild';
         var dialog = document.getElementById(id);
         dialog.close();
       }

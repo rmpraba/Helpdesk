@@ -7,18 +7,17 @@
 <link rel="import" href="../../bower_components/paper-input/paper-textarea.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
 <link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-item/paper-item.html">
 <link rel="import" href="../../bower_components/paper-toast/paper-toast.html">
 <link rel="import" href="../../bower_components/iron-autogrow-textarea/iron-autogrow-textarea.html">
 <link rel="import" href="../login-service/login-service.html">
+<link rel="import" href="../studentdropdown-card/studentdropdown-card.html">
 <!-- <script src="https://js.pusher.com/3.1/pusher.min.js"></script> -->
 <!-- <script src="bower_components/pusher/dist/web/pusher.min.js"></script> -->
 <!-- <script src="../scripts/pusher.min.js"></script> -->
 <dom-module id="login-form">
   <template>
     <style>
-      :host {
-        display: block; 
-      }
       .button{
         @apply(--layout-center);
       }
@@ -55,7 +54,6 @@
         margin: 0 auto;
       }
     </style>
-    <body>
         <div class="row">
           <input type="hidden" name="role" value="{{role}}">
           <div class="container login-card">
@@ -80,22 +78,13 @@
               <paper-input label="Mobile Number" value="{{mobile}}" id="mobile" allowed-pattern="[0-9]" required error-message="Mobile Number"></paper-input>
             </div>
             <div class="field" id="mobilepass" >
-              <paper-input label="Password" type="password" value="{{pass}}" on-change="mobileno" required error-message="Password"></paper-input>
-            </div>
-            <div class="field">
-              <paper-dropdown-menu label="Student" id="drop">
-                <paper-menu id="student" class="dropdown-content" required on-iron-select="student" valueattr="value" >
-                  <template  is="dom-repeat" items="{{parent}}" as="view">
-                    <paper-item value="{{view.student_id}}">{{view.student_name}}</paper-item>
-                  </template>
-                </paper-menu>
-              </paper-dropdown-menu>
+              <paper-input label="Password" type="password" value="{{pass}}" id="parentpass" on-change="mobileno" required error-message="Password"></paper-input>
             </div>
             <div class="field">
               <paper-input label="Username" value="{{username}}" id="user" on-change="loginid"></paper-input>
             </div>
             <div class="field">
-              <paper-input type="password" label="Password" value="{{password}}" id="pass"></paper-input>
+              <paper-input type="password" label="Passwords" value="{{password}}" id="pass"></paper-input>
             </div>
             <div class="button">
               <paper-button id="sub" class="sub" on-click="login">LOGIN</paper-button>
@@ -104,7 +93,7 @@
               <ahref id="admin" class="admin" on-click="butclick"><u>{{butname}}</u></ahref>
             </div> -->
             <div id="id">
-            <div class="signup">
+            <div class="signup" style="margin-top:40px;">
               <div class="buttons reg" style="color:#4e688c;">
                   <ahref class="admin" on-click="link"><u>Register Here..!</u></ahref>
               </div>
@@ -179,7 +168,6 @@
             <paper-button on-click="invalidexit">Ok</paper-button>
           </div>
         </paper-dialog>
-    </body>
     <login-service id="login"></login-service>
      <query-post id="qpostid"></query-post>
      <!-- <paper-button on-click="FnClick">Click</paper-button> 
@@ -253,8 +241,7 @@
     Polymer({
       is: 'login-form',
     ready:function(){
-      this.$.mobilepass.hidden=true;
-      this.Fnparent();
+      this.parentlogin();
         //var Pusher = require('pusher-js/node');
   /*      var pusher = new Pusher('AIzaSyCDMrCpSpzINswYqdu9RsrWGeGnfKRFin0', { cluster: "eu" });
        var pusher = new Pusher('AIzaSyCDMrCpSpzINswYqdu9RsrWGeGnfKRFin0');
@@ -270,6 +257,14 @@
       // alert(e.detail.response);
     },*/
   },
+    parentlogin:function(){
+      this.$.parentpass.hidden=false;
+      this.$.user.hidden=true;
+      this.$.pass.hidden=true;
+      this.$.sub.hidden=true;
+      var qwert="parent";
+      sessionStorage.setItem("icons",qwert);
+    },
     loginid:function(){
       var smuserid = this.username;
       var userid = smuserid.toUpperCase();
@@ -293,14 +288,6 @@
         document.querySelector('#passerrormsg').hidden = false;
       }
     },
-    student:function(e)
-    {
-      var id=e.target.selectedItem.value;
-      //alert(e.target.selectedItem.value);
-      this.$.qpostid.checktransportreq(id);
-      sessionStorage.setItem("studid",id);
-      this.$.login.getdetails(id);
-    },
     getrole:function(role){
       var role = role;
       if(role == "Teacher"){
@@ -312,26 +299,36 @@
     hideParentLogin:function(){
       this.$.user.hidden=false;
       this.$.mob.hidden=true;
-      this.$.drop.hidden=true;
+      //this.$.drop.hidden=true;
       this.$.id.hidden=true;
       this.$.sub.hidden=false;
+      this.$.pass.hidden=false;
+      this.$.parentpass.hidden=true;
+        
+        var qwert="manager";
+        sessionStorage.setItem("user","teacher");
+        sessionStorage.setItem("icons",qwert);
     },
     admin:function(){
       //alert('admin');
       sessionStorage.setItem("user","admin");
       this.$.mob.hidden=true;
-      this.$.drop.hidden=true;
+      //this.$.drop.hidden=true;
       this.$.id.hidden=true;
       this.$.user.hidden=false;
       this.$.pass.hidden=false;
       this.$.sub.hidden=false;
     this.$.mobilepass.hidden=true;
+      this.$.parentpass.hidden=true;
+        var qwert="staff";
+        //alert(qwert);
+        sessionStorage.setItem("icons",qwert);
     },
     teacher:function(){
       //alert('admin');
       sessionStorage.setItem("user","teacher");
       this.$.mob.hidden=true;
-      this.$.drop.hidden=true;
+      //this.$.drop.hidden=true;
       this.$.id.hidden=true;
       this.$.mobilepass.hidden=true;
     },
@@ -342,10 +339,12 @@
       this.$.pass.hidden=true;
       this.$.sub.hidden=true;
       this.$.mob.hidden=false;
-      this.$.drop.hidden=false;
+      //this.$.drop.hidden=false;
       this.$.id.hidden=false;
+      this.$.parentpass.hidden=false;
       this.$.mobilepass.hidden=false;
-
+      var qwert="parent";
+      sessionStorage.setItem("icons",qwert);
     },
     login:function(){
       this.$.login.adminlogin(this.username,this.password);

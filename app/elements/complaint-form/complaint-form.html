@@ -105,6 +105,7 @@ label.star:before {
                   <paper-item value="facilities"><paper-icon-button  class="category_icon" src="../../images/facilities_icon.png"></paper-icon-button>Facilities</paper-item>
                   <paper-item value="Finance"><paper-icon-button  class="category_icon" src="../../images/finance.png"></paper-icon-button>Finance</paper-item>
                   <paper-item value="Relation"><paper-icon-button  class="category_icon" src="../../images/others.png"></paper-icon-button>Others</paper-item>
+                  <paper-item value=0>....</paper-item>
                 </paper-listbox>
               </paper-menu>
             </paper-dropdown-menu>
@@ -191,7 +192,7 @@ label.star:before {
       {
         this.complaint="";
         //this.subject="";
-        document.querySelector('#category').selected=-1;
+        document.querySelector('#category').selected=0;
       },
       rating:function(){
       var rating = 0;
@@ -212,7 +213,7 @@ label.star:before {
       this.$.feedback_rate.hidden=true;
       this.$.stat.hidden=false;
       this.complaint="";
-      this.$.category.selected=-1;
+      this.$.category.selected=0;
       document.querySelector('app-card').setPage('transport');
           document.querySelector('transport-app').setPage("complaintpage");
 
@@ -223,7 +224,7 @@ label.star:before {
         dialog.close();
 
       this.complaint="";
-      document.getElementById('#category').selected=-1;
+      document.getElementById('#category').selected=0;
     },
     dialogshow:function(rep){
       //alert(rep);
