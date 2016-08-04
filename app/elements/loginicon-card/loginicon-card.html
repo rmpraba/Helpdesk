@@ -137,7 +137,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       parents:function(){
         //alert('1');
         var qwert="parent";
-        document.querySelector('login-form').Fnparent();
+        this.Fnparent();
         sessionStorage.setItem("icons",qwert);
       },
       admins:function(){
@@ -145,12 +145,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var qwert="manager";
         //alert(qwert);
         sessionStorage.setItem("icons",qwert);
-        document.querySelector('login-form').admin();
+        this.admin();
       },
       loginform:function(){
         var qwert="staff";
         sessionStorage.setItem("icons",qwert);
-        document.querySelector('login-form').hideParentLogin();
+        this.hideParentLogin();
       },
       zxcvdialog:function(reply){
         this.replyhere=reply;

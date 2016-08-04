@@ -53,121 +53,226 @@
         text-align: center;
         margin: 0 auto;
       }
-    </style>
-        <div class="row">
-          <input type="hidden" name="role" value="{{role}}">
-          <div class="container login-card">
-          <paper-tabs>
-            <paper-tab on-click="Fnparent">
-              Parent
-            </paper-tab>
-            <paper-tab on-click="hideParentLogin">
-              Staff
-            </paper-tab>
-            <paper-tab on-click="admin">
-              Management
-            </paper-tab>
-          </paper-tabs>
-          <!-- <div class="backicon">
-              <paper-icon-button class="iconbutton" on-click="back" src="../../images/schoollogo.jpg"></paper-icon-button>
-          </div> -->
-            <div class="icon">
-              <paper-icon-button class="iconbutton" src="../../images/schoollogo.png"></paper-icon-button>
-            </div>
-            <div class="field" id="mob">
-              <paper-input label="Mobile Number" value="{{mobile}}" id="mobile" allowed-pattern="[0-9]" required error-message="Mobile Number"></paper-input>
-            </div>
-            <div class="field" id="mobilepass" >
-              <paper-input label="Password" type="password" value="{{pass}}" id="parentpass" on-change="mobileno" required error-message="Password"></paper-input>
-            </div>
-            <div class="field">
-              <paper-input label="Username" value="{{username}}" id="user" on-change="loginid"></paper-input>
-            </div>
-            <div class="field">
-              <paper-input type="password" label="Passwords" value="{{password}}" id="pass"></paper-input>
-            </div>
-            <div class="button">
-              <paper-button id="sub" class="sub" on-click="login">LOGIN</paper-button>
-            </div>
-            <!-- <div>
-              <ahref id="admin" class="admin" on-click="butclick"><u>{{butname}}</u></ahref>
-            </div> -->
-            <div id="id">
-            <div class="signup" style="margin-top:40px;">
-              <div class="buttons reg" style="color:#4e688c;">
-                  <ahref class="admin" on-click="link"><u>Register Here..!</u></ahref>
-              </div>
-              <div class="buttons activate" style="color:#4e688c;">
-                  <ahref class="admin" on-click="link2"><u>Activate</u></ahref>
-              </div>
-              <div class="buttons" style="text-align:center; color:#4e688c;">
-                  <ahref class="admin forgotpass" on-click="link3"><u>Forgot Password?</u></ahref>
-              </div>
-            </div>
-          </div>
-          </div>
-          <div>
-          <paper-dialog id="registered">
-          <h2>Activate Here</h2>
-          <paper-dialog-scrollable>
-            <div class="field">
-              <paper-input class="field" id="regno" label="Newly Registered Mobile No" value="{{newregmob}}" required auto-validate error-message="Need a Mobile Number!"></paper-input>
-            </div>
-            <div class="field">  
-              <paper-input class="field" id="verifyno" label="Verification Key" value="{{verify}}" required auto-validate error-message="Need a Verification Key"></paper-input>
-            </div>
-            <div class="field">
-              <paper-input class="field" id="passnew" type="password"  on-change="newpass" label="Password" value="{{newpassword}}" required auto-validate error-message="Need a Password!" ></paper-input>
-            </div>
-            <div class="field">
-              <paper-input class="field" id="passconfirm" type="password" on-change="confirmpass" value="{{confirmpassword}}" label="Confirm Password" required auto-validate error-message="Need a Password!"></paper-input>
-            </div>
-            <p style="color:red;" id="passemptyerrormsg">Password and Confirm Password Should not be empty.</p>
-            <p style="color:red;" id="passerrormsg">Password and Confirm Password Should be same.</p>
-          </paper-dialog-scrollable>
-          <div class="buttons" style="width:20% !important; text-align:center; margin: 0 auto;">
-            <paper-button on-click="activate" >Activate</paper-button>
-          </div>
-        </paper-dialog></div>
-        <paper-dialog id="dialoghere">
-          <h2>{{replyhere}}</h2>
-          <div class="buttons">
-            <paper-button on-click="exit">Ok</paper-button>
-          </div>
-        </paper-dialog>
-        </div>
-        <paper-toast id="toast" text="Account is Activated! Please login.."></paper-toast>
 
-        <paper-dialog id="forgot">
-          <h2>Get new Password</h2>
-          <paper-dialog-scrollable>
-              <paper-input class="field" label="Enter Registered Mobile No" value="{{regmob}}"></paper-input>
-              
-          </paper-dialog-scrollable>
-          <div class="buttons">
-            <paper-button on-click="subforgot" >Submit</paper-button>
+
+      #one{
+        float: left;
+        position: absolute;
+        left: 0;
+        margin-left: 0;
+      }
+      #two{
+        float: center; 
+        position: absolute;
+        right: 0;
+        width: 230px;
+        margin-right: 44%;
+      }
+      #three{
+        float: right; 
+        position: absolute;
+        left: 60%;
+        width: 40%;
+      }
+      #admin{
+        width: 75%;
+      }
+      #parent-icon{
+        width: 38%;
+      }
+      @media screen and (min-width: 767px) and (max-width: 1225px){
+        #one { 
+          float: left;
+          width:33.33%;
+        }
+        #one paper-icon-button{
+          width: 75%;
+        }
+        #two{
+          float: none;
+          width:33.33%;
+        }
+        #two paper-icon-button{
+          width: 75%;
+          margin-left: 35%;
+        }
+
+        #three{
+          float: right;
+          margin-left: 8%;
+          width:33.33%;
+        }
+        #three paper-icon-button{
+          width: 75%;
+        }
+      }
+      @media screen and (max-width: 767px) {
+        #one { 
+          float: none;
+          margin: 70% 0%;
+          width:100%;
+        }
+        #one paper-icon-button{
+          width: 50%;
+        }
+        #two{
+          float: none;
+          margin: 0;
+          padding: 0;
+          width:100%;
+        }
+        #three{
+          float: none;
+          width:50%;
+          margin: 135% 0 25% -35%;
+        }
+        #two paper-icon-button{
+          width: 50%;
+          padding-top: 2%;
+          margin-top: 2%;
+        }
+        #three paper-icon-button{
+          width:100%;
+
+        }
+      }
+    </style>
+    <div class="background-img" style="background-image: url('../../images/schools-bg1.jpg');background-repeat: no-repeat; position: fixed; width: 100%;min-height: 100%;">
+        <div style="width:30%; margin:10% auto;">
+          <div class="row">
+            <input type="hidden" name="role" value="{{role}}">
+            <div class="container login-card">
+            <paper-tabs>
+              <paper-tab on-click="Fnparent">
+                Parent
+              </paper-tab>
+              <paper-tab on-click="hideParentLogin">
+                Staff
+              </paper-tab>
+              <paper-tab on-click="admin">
+                Management
+              </paper-tab>
+            </paper-tabs>
+            <!-- <div class="backicon">
+                <paper-icon-button class="iconbutton" on-click="back" src="../../images/schoollogo.jpg"></paper-icon-button>
+            </div> -->
+              <div class="icon">
+                <paper-icon-button class="iconbutton" src="../../images/schoollogo.png"></paper-icon-button>
+              </div>
+              <div class="field" id="mob">
+                <paper-input label="Mobile Number" value="{{mobile}}" id="mobile" allowed-pattern="[0-9]" required error-message="Mobile Number"></paper-input>
+              </div>
+              <div class="field" id="mobilepass" >
+                <paper-input label="Password" type="password" value="{{pass}}" id="parentpass" on-change="mobileno" required error-message="Password"></paper-input>
+              </div>
+              <div class="field">
+                <paper-input label="Username" value="{{username}}" id="user" on-change="loginid"></paper-input>
+              </div>
+              <div class="field">
+                <paper-input type="password" label="Passwords" value="{{password}}" id="pass"></paper-input>
+              </div>
+              <div class="button">
+                <paper-button id="sub" class="sub" on-click="login">LOGIN</paper-button>
+              </div>
+              <!-- <div>
+                <ahref id="admin" class="admin" on-click="butclick"><u>{{butname}}</u></ahref>
+              </div> -->
+              <div id="id">
+              <div class="signup" style="margin-top:40px;">
+                <div class="buttons reg" style="color:#4e688c;">
+                    <ahref class="admin" on-click="link"><u>Register Here..!</u></ahref>
+                </div>
+                <div class="buttons activate" style="color:#4e688c;">
+                    <ahref class="admin" on-click="link2"><u>Activate</u></ahref>
+                </div>
+                <div class="buttons" style="text-align:center; color:#4e688c;">
+                    <ahref class="admin forgotpass" on-click="link3"><u>Forgot Password?</u></ahref>
+                </div>
+              </div>
+            </div>
+            </div>
+            <div>
+            <paper-dialog id="registered">
+            <h2>Activate Here</h2>
+            <paper-dialog-scrollable>
+              <div class="field">
+                <paper-input class="field" id="regno" label="Newly Registered Mobile No" value="{{newregmob}}" required auto-validate error-message="Need a Mobile Number!"></paper-input>
+              </div>
+              <div class="field">  
+                <paper-input class="field" id="verifyno" label="Verification Key" value="{{verify}}" required auto-validate error-message="Need a Verification Key"></paper-input>
+              </div>
+              <div class="field">
+                <paper-input class="field" id="passnew" type="password"  on-change="newpass" label="Password" value="{{newpassword}}" required auto-validate error-message="Need a Password!" ></paper-input>
+              </div>
+              <div class="field">
+                <paper-input class="field" id="passconfirm" type="password" on-change="confirmpass" value="{{confirmpassword}}" label="Confirm Password" required auto-validate error-message="Need a Password!"></paper-input>
+              </div>
+              <p style="color:red;" id="passemptyerrormsg">Password and Confirm Password Should not be empty.</p>
+              <p style="color:red;" id="passerrormsg">Password and Confirm Password Should be same.</p>
+            </paper-dialog-scrollable>
+            <div class="buttons" style="width:20% !important; text-align:center; margin: 0 auto;">
+              <paper-button on-click="activate" >Activate</paper-button>
+            </div>
+          </paper-dialog>
+        </div>
+          <paper-dialog id="dialoghere">
+            <h2>{{replyhere}}</h2>
+            <div class="buttons">
+              <paper-button on-click="exit">Ok</paper-button>
+            </div>
+          </paper-dialog>
           </div>
-        </paper-dialog></div>
-        <paper-dialog id="dialoghere">
+          <paper-toast id="toast" text="Account is Activated! Please login.."></paper-toast>
+
+          <paper-dialog id="forgot">
+            <h2>Get new Password</h2>
+            <paper-dialog-scrollable>
+                <paper-input class="field" label="Enter Registered Mobile No" value="{{regmob}}"></paper-input>
+                
+            </paper-dialog-scrollable>
+            <div class="buttons">
+              <paper-button on-click="subforgot" >Submit</paper-button>
+            </div>
+          </paper-dialog>
+                    <paper-dialog id="dialoghere">
+            <h2>{{replyhere}}</h2>
+            
+            <div class="buttons">
+              <paper-button on-click="exit">Ok</paper-button>
+            </div>
+          </paper-dialog>
+           <paper-dialog id="successdialog">
+            <h2>{{successreply}}</h2>
+            <div class="buttons">
+              <paper-button on-click="successexit">Ok</paper-button>
+            </div>
+          </paper-dialog>
+           <paper-dialog id="invaliddialog">
+            <h2>{{invalidreply}}</h2>
+            
+            <div class="buttons">
+              <paper-button on-click="invalidexit">Ok</paper-button>
+            </div>
+          </paper-dialog>
+          </div>
+
+        </div>
+    <paper-dialog id="dialogqwertyu">
           <h2>{{replyhere}}</h2>
-          
           <div class="buttons">
             <paper-button on-click="exit">Ok</paper-button>
           </div>
         </paper-dialog>
-         <paper-dialog id="successdialog">
-          <h2>{{successreply}}</h2>
-          <div class="buttons">
-            <paper-button on-click="successexit">Ok</paper-button>
-          </div>
-        </paper-dialog>
-         <paper-dialog id="invaliddialog">
-          <h2>{{invalidreply}}</h2>
-          
-          <div class="buttons">
-            <paper-button on-click="invalidexit">Ok</paper-button>
-          </div>
-        </paper-dialog>
+      <paper-dialog modal id="selectchild" style="text-align:center; margin: 0 auto;">
+        <h3>Select Your Child</h3>
+        <paper-dropdown-menu  label="Student"  id="drop">
+          <paper-listbox id="student" class="dropdown-content"  required on-iron-select="student" valueattr="value">
+            <template is="dom-repeat" items="{{studentarr}}" as="view">
+              <paper-item value="{{view.student_id}}">{{view.student_name}}</paper-item>
+            </template>
+          </paper-listbox>
+        </paper-dropdown-menu>
+      </paper-dialog>
     <login-service id="login"></login-service>
      <query-post id="qpostid"></query-post>
      <!-- <paper-button on-click="FnClick">Click</paper-button> 
@@ -417,7 +522,56 @@
       },
       invalidexit:function(){
             document.querySelector('#invaliddialog').close();  
-      } 
+      } ,
+
+      parents:function(){
+        //alert('1');
+        var qwert="parent";
+        this.Fnparent();
+        sessionStorage.setItem("icons",qwert);
+      },
+      admins:function(){
+        //alert('2');
+        var qwert="manager";
+        //alert(qwert);
+        sessionStorage.setItem("icons",qwert);
+        this.admin();
+      },
+      loginform:function(){
+        var qwert="staff";
+        sessionStorage.setItem("icons",qwert);
+        this.hideParentLogin();
+      },
+      zxcvdialog:function(reply){
+        this.replyhere=reply;
+        var id = 'dialogqwertyu';
+        var dialog = document.getElementById(id);
+        dialog.open();
+      },
+      exit:function(){
+        var id = 'dialogqwertyu';
+        var dialog = document.getElementById(id);
+        dialog.close();
+      },
+      student:function(e){
+        var id=e.target.selectedItem.value;
+        //alert(e.target.selectedItem.value);
+        this.$.qpostid.checktransportreq(id);
+        sessionStorage.setItem("studid",id);
+        this.$.login.getdetails(id);
+        
+      sessionStorage.setItem("user","parent");
+      },
+      selectchild:function(){
+        var id = 'selectchild';
+        var dialog = document.getElementById(id);
+        dialog.open();
+      },
+      closedialog:function(){
+        var id = 'selectchild';
+        var dialog = document.getElementById(id);
+        dialog.close();
+      }
     });
   })();
   </script>
