@@ -280,8 +280,8 @@ var res=e.detail.response.returnval;
       //alert(JSON.stringify(qwertyu));
       //alert(school_name);
       document.querySelector('transport-app').school_name = school_name;
-      document.querySelector('loginicon-card').studentarr=qwertyu;
-      document.querySelector('loginicon-card').selectchild();
+      document.querySelector('login-form').studentarr=qwertyu;
+      document.querySelector('login-form').selectchild();
       }
     else
     {
@@ -361,7 +361,7 @@ var res=e.detail.response.returnval;
           reply='Login in Your Proper Gateway';
 
           document.querySelector('app-card').setPage("loginicon");
-          document.querySelector('loginicon-card').zxcvdialog(reply);
+          document.querySelector('login-form').zxcvdialog(reply);
         }
       } else {
         reply='Wrong Username and Password';
@@ -403,7 +403,7 @@ var res=e.detail.response.returnval;
        {
          this.$.qpostid.parentinbox();
          //alert('hi');
-         document.querySelector('loginicon-card').closedialog();
+         document.querySelector('login-form').closedialog();
          document.querySelector('app-card').setPage("transport");
         document.querySelector('transport-app').setPage("complaintpage");
        }
